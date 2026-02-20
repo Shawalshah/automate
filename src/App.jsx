@@ -73,11 +73,11 @@ function Particles() {
 /* ─── Animated flow diagram ─── */
 function AutomationFlow() {
   const steps = [
-    { icon: Mail, label: 'Lead Captured', color: '#3b82f6' },
-    { icon: Bot, label: 'AI Qualifies', color: '#8b5cf6' },
-    { icon: Database, label: 'CRM Updated', color: '#06b6d4' },
-    { icon: Send, label: 'Email Sent', color: '#10b981' },
-    { icon: Target, label: 'Deal Won', color: '#f59e0b' },
+    { icon: Cpu, label: 'Sensor Signal', color: '#3b82f6' },
+    { icon: Bot, label: 'Anomaly Detected', color: '#8b5cf6' },
+    { icon: Database, label: 'CMMS Ticket', color: '#06b6d4' },
+    { icon: ShoppingCart, label: 'Parts Requested', color: '#10b981' },
+    { icon: ShieldCheck, label: 'Uptime Restored', color: '#f59e0b' },
   ]
   return (
     <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-0">
@@ -126,27 +126,54 @@ const painPoints = [
 ]
 
 const workflows = [
-  { icon: BarChart3, title: 'Business Operations', desc: 'Lead capture, CRM sync, invoicing, contracts, expense tracking, report generation', color: '#3b82f6', iconBg: 'icon-bg-blue' },
-  { icon: MessageSquare, title: 'Customer Engagement', desc: 'Welcome sequences, onboarding, cart recovery, support routing, surveys, retention', color: '#8b5cf6', iconBg: 'icon-bg-violet' },
-  { icon: Target, title: 'Sales & Marketing', desc: 'Lead scoring, follow-ups, demo booking, proposals, deal automation, campaign optimization', color: '#f59e0b', iconBg: 'icon-bg-amber' },
-  { icon: Mail, title: 'Email & Communication', desc: 'Smart inbox, auto-responses, follow-up reminders, Slack/Teams notifications, SMS automation', color: '#06b6d4', iconBg: 'icon-bg-cyan' },
-  { icon: Bot, title: 'AI-Powered Workflows', desc: 'Content generation, sentiment analysis, document summarization, predictive analytics, NLP tasks', color: '#ec4899', iconBg: 'icon-bg-pink' },
-  { icon: Database, title: 'Data Synchronization', desc: 'Multi-system sync, migrations, spreadsheet automation, ETL pipelines, data validation', color: '#10b981', iconBg: 'icon-bg-emerald' },
-  { icon: Lock, title: 'HR & Internal Ops', desc: 'Onboarding/offboarding, leave requests, timesheets, IT ticket routing, compliance workflows', color: '#f97316', iconBg: 'icon-bg-orange' },
-  { icon: ShoppingCart, title: 'E-Commerce & Inventory', desc: 'Order fulfillment, inventory sync, stock alerts, shipping labels, returns processing', color: '#ef4444', iconBg: 'icon-bg-red' },
-  { icon: Share2, title: 'Social Media', desc: 'Content scheduling, engagement monitoring, lead capture, analytics, cross-platform posting', color: '#a855f7', iconBg: 'icon-bg-violet' },
-  { icon: Building2, title: 'Industry-Specific', desc: 'Healthcare, Real Estate, Finance, Legal, Education, Manufacturing, Hospitality', color: '#14b8a6', iconBg: 'icon-bg-teal' },
+  { icon: Cpu, title: 'Condition Monitoring', desc: 'IoT signals, historian data, thresholds, anomaly detection, alert routing, escalation', color: '#3b82f6', iconBg: 'icon-bg-blue' },
+  { icon: RefreshCw, title: 'Maintenance Orchestration', desc: 'CMMS tickets, approvals, technician dispatch, spare parts requests, closure verification', color: '#8b5cf6', iconBg: 'icon-bg-violet' },
+  { icon: Layers, title: 'Production Visibility', desc: 'Line status, OEE reporting, downtime reasons, shift handover, audit trails', color: '#f59e0b', iconBg: 'icon-bg-amber' },
+  { icon: ShieldCheck, title: 'Quality & Compliance', desc: 'Batch traceability, deviation workflows, controlled changes, approvals, reporting', color: '#06b6d4', iconBg: 'icon-bg-cyan' },
+  { icon: Plug, title: 'System Integration', desc: 'SCADA/MES/ERP connectivity, OPC UA/MQTT, APIs, data synchronization, validation', color: '#ec4899', iconBg: 'icon-bg-pink' },
+  { icon: Database, title: 'Data Pipelines', desc: 'ETL, data quality checks, standardization, dashboards, operational analytics', color: '#10b981', iconBg: 'icon-bg-emerald' },
+  { icon: Lock, title: 'Governance & Access', desc: 'Role-based access, approval gates, audit logs, change management, incident history', color: '#f97316', iconBg: 'icon-bg-orange' },
+  { icon: ShoppingCart, title: 'Inventory & Spares', desc: 'Stock alerts, reorder triggers, vendor routing, receiving workflows, consumption logging', color: '#ef4444', iconBg: 'icon-bg-red' },
+  { icon: BarChart3, title: 'Operations Reporting', desc: 'Daily production reports, SLA dashboards, KPI alerts, executive summaries', color: '#a855f7', iconBg: 'icon-bg-violet' },
+  { icon: Building2, title: 'Multi-Site Rollout', desc: 'Standardized templates, site onboarding, training, monitoring, continuous improvement', color: '#14b8a6', iconBg: 'icon-bg-teal' },
 ]
 
+ const useCases = [
+   {
+     icon: Layers,
+     title: 'Textile',
+     points: ['Quality inspection workflows', 'Production planning sync', 'Predictive maintenance alerts', 'Reduced rework & wastage'],
+     color: '#3b82f6',
+   },
+   {
+     icon: ShieldCheck,
+     title: 'Pharma',
+     points: ['Compliance-ready automation', 'Batch traceability & audit logs', 'Deviation detection and routing', 'Controlled approvals'],
+     color: '#10b981',
+   },
+   {
+     icon: Share2,
+     title: 'Logistics',
+     points: ['Warehouse orchestration', 'Routing optimization triggers', 'Exception handling workflows', 'SLA monitoring & alerts'],
+     color: '#8b5cf6',
+   },
+   {
+     icon: Cpu,
+     title: 'Manufacturing',
+     points: ['OEE improvement loops', 'Downtime root-cause workflows', 'Maintenance ticket automation', 'Spare parts coordination'],
+     color: '#f59e0b',
+   },
+ ]
+
 const techStack = [
-  { name: 'Zapier', desc: '6,000+ integrations', category: 'No-Code' },
-  { name: 'Make', desc: 'Complex visual workflows', category: 'No-Code' },
-  { name: 'n8n', desc: 'Open-source, self-hosted', category: 'No-Code' },
-  { name: 'Power Automate', desc: 'Microsoft ecosystem', category: 'No-Code' },
-  { name: 'LangChain', desc: 'AI orchestration', category: 'AI' },
-  { name: 'OpenAI', desc: 'Language models', category: 'AI' },
+  { name: 'OPC UA', desc: 'Industrial connectivity', category: 'Integration' },
+  { name: 'MQTT', desc: 'IoT messaging', category: 'Integration' },
+  { name: 'SCADA / HMI', desc: 'Operations visibility', category: 'Operations' },
+  { name: 'MES / ERP', desc: 'Production + planning', category: 'Operations' },
+  { name: 'Data Historian', desc: 'Time-series storage', category: 'Data' },
+  { name: 'n8n / Node-RED', desc: 'Orchestration', category: 'Automation' },
+  { name: 'AI Models', desc: 'Anomaly detection', category: 'AI' },
   { name: 'Custom APIs', desc: 'Bespoke solutions', category: 'Custom' },
-  { name: 'LangGraph', desc: 'Multi-agent systems', category: 'AI' },
 ]
 
 const timeline = [
@@ -174,17 +201,17 @@ const painColors = {
 
 function PainPointsSection() {
   const sectionRef = useRef(null)
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end end'] })
   const count = painPoints.length
-  const x = useTransform(scrollYProgress, [0.04, 0.96], ['0vw', `-${(count - 1) * 100}vw`])
+  const x = useTransform(scrollYProgress, [0, 1], ['0vw', `-${(count - 1) * 100}vw`])
   const [active, setActive] = useState(0)
   useMotionValueEvent(scrollYProgress, 'change', v => {
-    const n = Math.max(0, Math.min(1, (v - 0.04) / 0.92))
+    const n = Math.max(0, Math.min(1, v))
     setActive(Math.round(n * (count - 1)))
   })
 
   return (
-    <section ref={sectionRef} id="problems" style={{ height: `${count * 100}vh` }} className="relative neuro-section">
+    <section ref={sectionRef} id="problems" style={{ height: `${(count + 1) * 100}vh` }} className="relative neuro-section">
       <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
         {/* Header */}
         <div className="flex-shrink-0 text-center pt-20 pb-6 px-6">
@@ -224,12 +251,8 @@ function PainPointsSection() {
               return (
                 <div key={i} style={{ width: '100vw', flexShrink: 0 }} className="flex items-center justify-center px-6 sm:px-12">
                   <motion.div
-                    className={`neuro-card w-full relative overflow-hidden`}
+                    className={`neuro-card w-full relative overflow-hidden ${i === active ? 'neuro-card-active' : ''}`}
                     style={{ maxWidth: 780, height: 'clamp(380px, 58vh, 520px)' }}
-                    animate={{ boxShadow: i === active
-                      ? `14px 14px 36px var(--neuro-shadow-dark), -14px -14px 36px var(--neuro-shadow-light), 0 0 90px ${color}30, inset 0 0 0 1px ${color}20`
-                      : undefined
-                    }}
                     transition={{ duration: 0.5 }}
                   >
                     {/* Big ghost number */}
@@ -270,7 +293,7 @@ function PainPointsSection() {
 
                     {/* Accent glow blob */}
                     <div
-                      className="absolute -bottom-16 -right-16 w-48 h-48 rounded-full pointer-events-none"
+                      className="neuro-accent-blob absolute -bottom-16 -right-16 w-48 h-48 rounded-full pointer-events-none"
                       style={{ background: `radial-gradient(circle, ${color}35 0%, transparent 70%)`, filter: 'blur(30px)' }}
                     />
                   </motion.div>
@@ -299,17 +322,17 @@ function PainPointsSection() {
 /* ─── Capabilities — Neumorphism Horizontal Scroll ─── */
 function CapabilitiesSection() {
   const sectionRef = useRef(null)
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end end'] })
   const count = workflows.length
-  const x = useTransform(scrollYProgress, [0.04, 0.96], ['0vw', `-${(count - 1) * 100}vw`])
+  const x = useTransform(scrollYProgress, [0, 1], ['0vw', `-${(count - 1) * 100}vw`])
   const [active, setActive] = useState(0)
   useMotionValueEvent(scrollYProgress, 'change', v => {
-    const n = Math.max(0, Math.min(1, (v - 0.04) / 0.92))
+    const n = Math.max(0, Math.min(1, v))
     setActive(Math.round(n * (count - 1)))
   })
 
   return (
-    <section ref={sectionRef} id="workflows" style={{ height: `${count * 100}vh` }} className="relative neuro-section">
+    <section ref={sectionRef} id="workflows" style={{ height: `${(count + 1) * 100}vh` }} className="relative neuro-section">
       <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
         {/* Header */}
         <div className="flex-shrink-0 text-center pt-20 pb-6 px-6">
@@ -346,12 +369,8 @@ function CapabilitiesSection() {
             {workflows.map((item, i) => (
               <div key={i} style={{ width: '100vw', flexShrink: 0 }} className="flex items-center justify-center px-6 sm:px-12">
                 <motion.div
-                  className="neuro-card w-full relative overflow-hidden"
+                  className={`neuro-card w-full relative overflow-hidden ${i === active ? 'neuro-card-active' : ''}`}
                   style={{ maxWidth: 720, height: 'clamp(360px, 55vh, 500px)' }}
-                  animate={{ boxShadow: i === active
-                    ? `14px 14px 36px var(--neuro-shadow-dark), -14px -14px 36px var(--neuro-shadow-light), 0 0 90px ${item.color}30, inset 0 0 0 1px ${item.color}20`
-                    : undefined
-                  }}
                   transition={{ duration: 0.5 }}
                 >
                   {/* Big ghost number */}
@@ -395,7 +414,7 @@ function CapabilitiesSection() {
                   </div>
 
                   <div
-                    className="absolute -bottom-16 -right-16 w-56 h-56 rounded-full pointer-events-none"
+                    className="neuro-accent-blob absolute -bottom-16 -right-16 w-56 h-56 rounded-full pointer-events-none"
                     style={{ background: `radial-gradient(circle, ${item.color}35 0%, transparent 70%)`, filter: 'blur(30px)' }}
                   />
                 </motion.div>
@@ -454,9 +473,9 @@ function App() {
             </span>
           </a>
           <div className="hidden md:flex items-center gap-8">
-            {['Problems', 'Workflows', 'Stack', 'Process', 'FAQ'].map(item => (
-              <a key={item} href={`#${item.toLowerCase()}`} className="text-sm no-underline text-muted transition-colors duration-300" style={{ '--tw-text-opacity': 1 }}>
-                {item}
+            {[{ label: 'Home', href: '#' }, { label: 'Workflows', href: '#workflows' }, { label: 'Use Cases', href: '#use-cases' }, { label: 'About', href: '#about' }, { label: 'Contact', href: '#contact' }].map(item => (
+              <a key={item.label} href={item.href} className="text-sm no-underline text-muted transition-colors duration-300" style={{ '--tw-text-opacity': 1 }}>
+                {item.label}
               </a>
             ))}
             <motion.button
@@ -478,7 +497,7 @@ function App() {
               </AnimatePresence>
             </motion.button>
             <a href="#contact" className="btn-primary px-5 py-2 text-sm font-medium rounded-full no-underline">
-              Book Free Audit
+              Request Demo
             </a>
           </div>
           <div className="md:hidden flex items-center gap-3">
@@ -498,13 +517,13 @@ function App() {
               exit={{ opacity: 0, y: -10 }}
               className="md:hidden mt-2 mobile-menu rounded-2xl p-6 flex flex-col gap-4"
             >
-              {['Problems', 'Workflows', 'Stack', 'Process', 'FAQ'].map(item => (
-                <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMobileMenu(false)} className="text-muted transition-colors no-underline">
-                  {item}
+              {[{ label: 'Home', href: '#' }, { label: 'Workflows', href: '#workflows' }, { label: 'Use Cases', href: '#use-cases' }, { label: 'About', href: '#about' }, { label: 'Contact', href: '#contact' }].map(item => (
+                <a key={item.label} href={item.href} onClick={() => setMobileMenu(false)} className="text-muted transition-colors no-underline">
+                  {item.label}
                 </a>
               ))}
               <a href="#contact" onClick={() => setMobileMenu(false)} className="btn-primary px-5 py-2.5 text-sm font-medium rounded-full text-center no-underline">
-                Book Free Audit
+                Request Demo
               </a>
             </motion.div>
           )}
@@ -523,37 +542,40 @@ function App() {
           <Reveal>
             <motion.div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full pill-badge mb-8" whileHover={{ scale: 1.03 }}>
               <Sparkles size={14} color="#60a5fa" />
-              <span className="text-xs font-medium text-muted">Intelligent Automation Platform</span>
+              <span className="text-xs font-medium text-muted">Industrial Automation Platform</span>
             </motion.div>
           </Reveal>
           <Reveal delay={0.1}>
             <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight mb-6" style={{ lineHeight: 0.95 }}>
-              <span className="block">Work That</span>
-              <span className="block gradient-text">Runs Itself.</span>
+              <span className="block">Automation That</span>
+              <span className="block gradient-text">Reduces Downtime.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
             <p className="text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light text-muted">
-              Zero Touch. Maximum Output. From manual chaos to intelligent automation — we build workflows that think, adapt, and execute 24/7.
+              Improve operational efficiency, increase uptime, and integrate plant and warehouse systems with automation that monitors, routes, and executes in real time.
             </p>
           </Reveal>
           <Reveal delay={0.3}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a href="#contact" className="group btn-primary px-8 py-4 rounded-full font-semibold text-sm flex items-center gap-2 no-underline">
-                Start Automating
+                Request Demo
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </a>
-              <a href="#workflows" className="btn-outline px-8 py-4 rounded-full font-medium text-sm no-underline">
-                See What We Automate
+              <a href="#use-cases" className="btn-outline px-8 py-4 rounded-full font-medium text-sm no-underline">
+                Explore Use Cases
+              </a>
+              <a href="#contact" className="btn-outline px-8 py-4 rounded-full font-medium text-sm no-underline">
+                Book Consultation
               </a>
             </div>
           </Reveal>
           <Reveal delay={0.5}>
             <div className="mt-20 grid grid-cols-3 gap-8 max-w-lg mx-auto">
               {[
-                { value: 500, suffix: '+', label: 'Workflows Built' },
-                { value: 30, suffix: 'hrs', label: 'Saved per Week' },
-                { value: 99, suffix: '%', label: 'Uptime' },
+                { value: 18, suffix: '%', label: 'Efficiency Gains' },
+                { value: 22, suffix: '%', label: 'Downtime Reduced' },
+                { value: 99, suffix: '%', label: 'Monitoring Uptime' },
               ].map((stat, i) => (
                 <div key={i} className="text-center">
                   <div className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>
@@ -588,11 +610,56 @@ function App() {
                 See Automation in Action
               </h2>
               <p className="text-muted mt-4 max-w-lg mx-auto font-light">
-                A lead comes in → AI qualifies → CRM updates → Email sends → Deal closes. Zero human touch.
+                Sensor signals → anomaly detection → maintenance ticket → parts request → uptime restored. Escalate only when needed.
               </p>
             </div>
           </Reveal>
           <AutomationFlow />
+        </div>
+      </section>
+
+      <section id="use-cases" className="relative py-32 px-6">
+        <div className="divider-line absolute top-0 left-0 right-0" />
+        <div className="max-w-6xl mx-auto relative z-10">
+          <Reveal>
+            <div className="text-center mb-20">
+              <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: '#3b82f6', letterSpacing: '0.2em' }}>Use Cases</span>
+              <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mt-4">
+                Built for Industrial Operations
+              </h2>
+              <p className="text-muted mt-6 max-w-2xl mx-auto font-light text-lg">
+                Industry-specific automation that improves throughput, reduces downtime, and standardizes execution across sites.
+              </p>
+            </div>
+          </Reveal>
+          <div className="grid md:grid-cols-2 gap-6">
+            {useCases.map((uc, i) => (
+              <Reveal key={uc.title} delay={i * 0.06}>
+                <div className="glass-card-strong p-8 rounded-3xl">
+                  <div className="flex items-start justify-between gap-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: `${uc.color}25` }}>
+                        <uc.icon size={22} style={{ color: uc.color }} />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold">{uc.title}</h3>
+                        <p className="text-xs text-muted-light mt-1">Automation patterns tailored to your constraints and KPIs.</p>
+                      </div>
+                    </div>
+                    <ArrowUpRight size={18} className="text-muted-extra" />
+                  </div>
+                  <div className="mt-6 grid grid-cols-1 gap-3">
+                    {uc.points.map((p, j) => (
+                      <div key={j} className="flex items-center gap-2">
+                        <Check size={14} style={{ color: 'var(--accent-success)' }} />
+                        <span className="text-sm text-muted">{p}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -610,7 +677,7 @@ function App() {
                 Our Automation Stack
               </h2>
               <p className="text-muted mt-6 max-w-lg mx-auto font-light text-lg">
-                The right tool for every workflow.
+                Integrations, orchestration, and AI—selected for reliability in production environments.
               </p>
             </div>
           </Reveal>
@@ -635,6 +702,48 @@ function App() {
               ))}
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      <section id="about" className="relative py-32 px-6">
+        <div className="divider-line absolute top-0 left-0 right-0" />
+        <div className="max-w-6xl mx-auto relative z-10">
+          <Reveal>
+            <div className="text-center mb-16">
+              <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: '#10b981', letterSpacing: '0.2em' }}>About</span>
+              <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mt-4">
+                Enterprise-Ready Automation
+              </h2>
+              <p className="text-muted mt-6 max-w-2xl mx-auto font-light text-lg">
+                MechLinks.ai connects systems, standardizes workflows, and adds intelligence to operations—so teams can move faster with fewer incidents.
+              </p>
+            </div>
+          </Reveal>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[{
+              icon: Plug,
+              title: 'Integration-First',
+              desc: 'Connect existing systems and data sources with robust orchestration and clear error handling.'
+            }, {
+              icon: Zap,
+              title: 'Operational Efficiency',
+              desc: 'Reduce manual work, accelerate response times, and push standardized execution across sites.'
+            }, {
+              icon: Lock,
+              title: 'Governed & Auditable',
+              desc: 'Role-based access, approvals, and logs designed for production environments.'
+            }].map((card, i) => (
+              <Reveal key={card.title} delay={i * 0.06}>
+                <div className="glass-card-strong p-8 rounded-3xl">
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(96,165,250,0.12)' }}>
+                    <card.icon size={22} style={{ color: 'rgba(96,165,250,0.9)' }} />
+                  </div>
+                  <h3 className="text-lg font-semibold mt-6">{card.title}</h3>
+                  <p className="text-sm text-muted mt-3 font-light">{card.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -731,26 +840,29 @@ function App() {
         <div className="max-w-4xl mx-auto relative z-10 text-center">
           <Reveal>
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
-              Stop Doing Work<br />
-              <span className="gradient-text">That Can Run Itself.</span>
+              Reduce Downtime.<br />
+              <span className="gradient-text">Standardize Execution.</span>
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="text-muted mt-6 max-w-xl mx-auto text-lg font-light">
-              One audit reveals how much time you're wasting. 45 minutes. Zero commitment.
+              A focused assessment identifies your highest-impact automation opportunities and the integration path to production.
             </p>
           </Reveal>
           <Reveal delay={0.2}>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <a href="#contact" className="group btn-primary px-10 py-5 rounded-full font-semibold text-sm flex items-center gap-2 no-underline">
-                Book Free Automation Audit
+                Contact Sales
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </a>
+              <a href="#contact" className="btn-outline px-10 py-5 rounded-full font-medium text-sm no-underline">
+                Book Consultation
               </a>
             </div>
           </Reveal>
           <Reveal delay={0.3}>
             <div className="mt-12 flex flex-wrap justify-center gap-6 text-xs text-muted-light">
-              {['Map your manual processes', 'Identify top opportunities', 'Calculate time savings', 'ROI projections', 'No-code vs custom recommendation'].map((item, i) => (
+              {['Process mapping & bottlenecks', 'Integration requirements', 'Downtime reduction opportunities', 'Governance & approvals', 'ROI and rollout plan'].map((item, i) => (
                 <div key={i} className="flex items-center gap-1.5">
                   <Check size={12} style={{ color: 'var(--accent-success-dim)' }} />
                   <span>{item}</span>
@@ -770,21 +882,21 @@ function App() {
               <Reveal>
                 <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: '#3b82f6', letterSpacing: '0.2em' }}>Get Started</span>
                 <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mt-4">
-                  Let's Automate
+                  Talk to Sales
                 </h2>
                 <p className="text-muted mt-4 font-light">
-                  Book your free automation audit today.
+                  Tell us what you want to automate—production, maintenance, logistics, or reporting—and we’ll propose an implementation plan.
                 </p>
               </Reveal>
               <Reveal delay={0.15}>
                 <div className="mt-12 space-y-6">
                   <h3 className="text-sm font-semibold uppercase tracking-wider text-muted">What Happens Next</h3>
                   {[
-                    'We review your automation needs',
-                    'Schedule 45-min discovery call',
-                    'Analyze your current workflows',
-                    'Present automation opportunities & ROI',
-                    'Discuss implementation approach',
+                    'We review your operational goals and constraints',
+                    'Schedule a discovery call with stakeholders',
+                    'Map systems, data flows, and approvals',
+                    'Share prioritized automation opportunities & ROI',
+                    'Align on rollout plan and delivery milestones',
                   ].map((step, i) => (
                     <div key={i} className="flex items-start gap-4">
                       <div className="w-7 h-7 rounded-full step-dot flex items-center justify-center shrink-0 mt-0.5">
@@ -847,7 +959,7 @@ function App() {
                     className="btn-primary w-full py-4 rounded-xl font-semibold text-sm flex items-center justify-center gap-2"
                     style={{ border: 'none', cursor: 'pointer' }}
                   >
-                    Get Free Audit
+                    Request Demo
                     <ArrowRight size={16} />
                   </motion.button>
                 </div>
@@ -865,20 +977,24 @@ function App() {
               <span className="text-base font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
                 Mech<span className="gradient-text">links</span>
               </span>
+              <span className="text-xs text-muted-extra ml-3">Enterprise Industrial Automation</span>
             </div>
             <div className="flex items-center gap-8">
               {[
                 { label: 'Workflows', href: '#workflows' },
-                { label: 'Stack', href: '#stack' },
-                { label: 'Process', href: '#process' },
+                { label: 'Use Cases', href: '#use-cases' },
+                { label: 'About', href: '#about' },
                 { label: 'Contact', href: '#contact' },
               ].map(link => (
-                <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="text-xs text-muted-light transition-colors no-underline">
+                <a key={link.label} href={link.href} className="text-xs text-muted-light transition-colors no-underline">
                   {link.label}
                 </a>
               ))}
             </div>
-            <p className="text-xs text-muted-extra">© 2026 Mechlinks. All rights reserved.</p>
+            <div className="text-center md:text-right">
+              <p className="text-xs text-muted-extra">sales@mechlinks.ai</p>
+              <p className="text-xs text-muted-extra mt-1">© 2026 Mechlinks. All rights reserved.</p>
+            </div>
           </div>
         </div>
       </footer>
