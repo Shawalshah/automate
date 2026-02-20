@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════
-   DESIGN TOKENS — CSS Custom Properties
+   DESIGN TOKENS - CSS Custom Properties
    Dark theme is default (:root)
    Light theme overrides [data-theme="light"]
 ═══════════════════════════════════════════════ */
@@ -10,31 +10,31 @@
   --bg-nav:        rgba(10,10,10,0.80);
   --bg-mobile:     rgba(5,5,5,0.97);
 
-  /* Surfaces — boosted for visibility */
+  /* Surfaces - boosted for visibility */
   --surface-1:     rgba(255,255,255,0.07);
   --surface-2:     rgba(255,255,255,0.10);
   --surface-hover: rgba(255,255,255,0.13);
   --surface-hover-strong: rgba(255,255,255,0.15);
 
-  /* Borders — more visible */
+  /* Borders - more visible */
   --border-1:      rgba(255,255,255,0.12);
   --border-2:      rgba(255,255,255,0.16);
   --border-hover:  rgba(255,255,255,0.22);
   --border-hover-strong: rgba(255,255,255,0.28);
 
-  /* Text — higher contrast */
+  /* Text - higher contrast */
   --text-primary:  #ffffff;
   --text-muted:    rgba(255,255,255,0.62);
   --text-subtle:   rgba(255,255,255,0.45);
   --text-extra:    rgba(255,255,255,0.32);
   --text-nav-link: rgba(255,255,255,0.55);
 
-  /* Button — primary */
+  /* Button - primary */
   --btn-primary-bg:    #ffffff;
   --btn-primary-color: #000000;
   --btn-primary-shadow: rgba(255,255,255,0.18);
 
-  /* Button — outline */
+  /* Button - outline */
   --btn-outline-border: rgba(255,255,255,0.20);
   --btn-outline-color:  rgba(255,255,255,0.75);
   --btn-outline-hover:  rgba(255,255,255,0.08);
@@ -70,36 +70,36 @@
 }
 
 [data-theme="light"] {
-  /* Backgrounds — stronger contrast base */
+  /* Backgrounds - stronger contrast base */
   --bg:            #f5f7fa;
   --bg-nav:        rgba(255,255,255,0.92);
   --bg-mobile:     rgba(250,251,255,0.99);
 
-  /* Surfaces — solid white cards on gray bg */
+  /* Surfaces - solid white cards on gray bg */
   --surface-1:     #ffffff;
   --surface-2:     #ffffff;
   --surface-hover: #fafafd;
   --surface-hover-strong: #fafafd;
 
-  /* Borders — clearly visible */
+  /* Borders - clearly visible */
   --border-1:      rgba(0,0,0,0.10);
   --border-2:      rgba(0,0,0,0.14);
   --border-hover:  rgba(0,0,0,0.22);
   --border-hover-strong: rgba(0,0,0,0.28);
 
-  /* Text — strong contrast */
+  /* Text - strong contrast */
   --text-primary:  #0f0f0f;
   --text-muted:    rgba(0,0,0,0.62);
   --text-subtle:   rgba(0,0,0,0.50);
   --text-extra:    rgba(0,0,0,0.38);
   --text-nav-link: rgba(0,0,0,0.55);
 
-  /* Button — primary */
+  /* Button - primary */
   --btn-primary-bg:    #111111;
   --btn-primary-color: #ffffff;
   --btn-primary-shadow: rgba(0,0,0,0.22);
 
-  /* Button — outline */
+  /* Button - outline */
   --btn-outline-border: rgba(0,0,0,0.18);
   --btn-outline-color:  rgba(0,0,0,0.68);
   --btn-outline-hover:  rgba(0,0,0,0.05);

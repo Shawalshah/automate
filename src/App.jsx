@@ -117,11 +117,11 @@ function AutomationFlow() {
 
 /* ─── Data ─── */
 const painPoints = [
-  { icon: Layers, title: 'Copy-Paste Hell', problem: 'Your team wastes hours moving data between systems. Spreadsheets. CRMs. Emails. Manual entry everywhere.', solution: 'Data flows automatically between all your tools.' },
-  { icon: Clock, title: 'Response Delays', problem: 'Customer inquiries sit for hours. Follow-ups get forgotten. Your competitors respond while you\'re sleeping.', solution: 'Instant responses. Intelligent routing. 24/7 operation.' },
-  { icon: ShieldCheck, title: 'Manual Approvals', problem: 'Everything needs human sign-off. Workflows bottleneck. Simple tasks take days.', solution: 'Smart approval chains. Rule-based decisions. Escalation only when needed.' },
-  { icon: TrendingUp, title: 'Lost Opportunities', problem: 'Leads fall through cracks. Follow-ups never happen. Your sales pipeline leaks revenue.', solution: 'Lead capture, scoring, nurturing—all automatic.' },
-  { icon: RefreshCw, title: 'Repetitive Admin', problem: 'Invoicing. Scheduling. Reporting. Data entry. High-paid talent doing low-value work.', solution: 'Administrative tasks eliminated. Team focuses on strategy.' },
+  { icon: Layers, title: 'Copy Paste Hell', problem: 'Your team wastes hours moving data between systems. Spreadsheets. CRMs. Emails. Manual entry everywhere.', solution: 'Data flows automatically between all your tools.' },
+  { icon: Clock, title: 'Response Delays', problem: 'Customer inquiries sit for hours. Follow ups get forgotten. Your competitors respond while you\'re sleeping.', solution: 'Instant responses. Intelligent routing. 24/7 operation.' },
+  { icon: ShieldCheck, title: 'Manual Approvals', problem: 'Everything needs human sign off. Workflows bottleneck. Simple tasks take days.', solution: 'Smart approval chains. Rule based decisions. Escalation only when needed.' },
+  { icon: TrendingUp, title: 'Lost Opportunities', problem: 'Leads fall through cracks. Follow ups never happen. Your sales pipeline leaks revenue.', solution: 'Lead capture, scoring, nurturing all automatic.' },
+  { icon: RefreshCw, title: 'Repetitive Admin', problem: 'Invoicing. Scheduling. Reporting. Data entry. High-paid talent doing low value work.', solution: 'Administrative tasks eliminated. Team focuses on strategy.' },
   { icon: Plug, title: 'Disconnected Systems', problem: '10 tools. Zero communication. Manual bridges everywhere. Information silos slow everything down.', solution: 'Everything talks to everything. One ecosystem.' },
 ]
 
@@ -132,7 +132,7 @@ const workflows = [
   { icon: ShieldCheck, title: 'Quality & Compliance', desc: 'Batch traceability, deviation workflows, controlled changes, approvals, reporting', color: '#06b6d4', iconBg: 'icon-bg-cyan' },
   { icon: Plug, title: 'System Integration', desc: 'SCADA/MES/ERP connectivity, OPC UA/MQTT, APIs, data synchronization, validation', color: '#ec4899', iconBg: 'icon-bg-pink' },
   { icon: Database, title: 'Data Pipelines', desc: 'ETL, data quality checks, standardization, dashboards, operational analytics', color: '#10b981', iconBg: 'icon-bg-emerald' },
-  { icon: Lock, title: 'Governance & Access', desc: 'Role-based access, approval gates, audit logs, change management, incident history', color: '#f97316', iconBg: 'icon-bg-orange' },
+  { icon: Lock, title: 'Governance & Access', desc: 'Role based access, approval gates, audit logs, change management, incident history', color: '#f97316', iconBg: 'icon-bg-orange' },
   { icon: ShoppingCart, title: 'Inventory & Spares', desc: 'Stock alerts, reorder triggers, vendor routing, receiving workflows, consumption logging', color: '#ef4444', iconBg: 'icon-bg-red' },
   { icon: BarChart3, title: 'Operations Reporting', desc: 'Daily production reports, SLA dashboards, KPI alerts, executive summaries', color: '#a855f7', iconBg: 'icon-bg-violet' },
   { icon: Building2, title: 'Multi-Site Rollout', desc: 'Standardized templates, site onboarding, training, monitoring, continuous improvement', color: '#14b8a6', iconBg: 'icon-bg-teal' },
@@ -170,7 +170,7 @@ const techStack = [
   { name: 'MQTT', desc: 'IoT messaging', category: 'Integration' },
   { name: 'SCADA / HMI', desc: 'Operations visibility', category: 'Operations' },
   { name: 'MES / ERP', desc: 'Production + planning', category: 'Operations' },
-  { name: 'Data Historian', desc: 'Time-series storage', category: 'Data' },
+  { name: 'Data Historian', desc: 'Time series storage', category: 'Data' },
   { name: 'n8n / Node-RED', desc: 'Orchestration', category: 'Automation' },
   { name: 'AI Models', desc: 'Anomaly detection', category: 'AI' },
   { name: 'Custom APIs', desc: 'Bespoke solutions', category: 'Custom' },
@@ -178,21 +178,21 @@ const techStack = [
 
 const timeline = [
   { week: 'Week 1', title: 'Discovery & Mapping', items: ['Audit current processes', 'Identify automation opportunities', 'Map data flows', 'Prioritize by ROI'], deliverable: 'Automation roadmap with ROI projections' },
-  { week: 'Week 2–3', title: 'Build & Integrate', items: ['Set up platforms', 'Build workflows in parallel', 'Connect systems & APIs', 'Implement error handling'], deliverable: 'Working automations (staging)' },
-  { week: 'Week 3–4', title: 'Test & Optimize', items: ['End-to-end testing', 'Edge case handling', 'Performance optimization', 'User acceptance testing'], deliverable: 'Production-ready automations' },
+  { week: 'Week 2-3', title: 'Build & Integrate', items: ['Set up platforms', 'Build workflows in parallel', 'Connect systems & APIs', 'Implement error handling'], deliverable: 'Working automations (staging)' },
+  { week: 'Week 3-4', title: 'Test & Optimize', items: ['End-to-end testing', 'Edge case handling', 'Performance optimization', 'User acceptance testing'], deliverable: 'Production-ready automations' },
   { week: 'Week 4', title: 'Deploy & Train', items: ['Production deployment', 'Team training', 'Documentation handoff', 'Monitoring setup'], deliverable: 'Live automations + trained team' },
 ]
 
 const faqs = [
-  { q: 'How long does automation implementation take?', a: 'Most projects go live within 2–4 weeks. Simple automations can be deployed in days, while complex multi-system integrations may take 4–6 weeks.' },
+  { q: 'How long does automation implementation take?', a: 'Most projects go live within 2-4 weeks. Simple automations can be deployed in days, while complex multi-system integrations may take 4-6 weeks.' },
   { q: 'What if my tool doesn\'t have an integration?', a: 'We build custom API integrations. If your tool has an API (most do), we can connect it. For legacy systems, we create middleware bridges.' },
   { q: 'Can I change workflows after they\'re built?', a: 'Absolutely. All automations are designed to be modifiable. We provide documentation and training so your team can make adjustments.' },
   { q: 'What if an automation breaks?', a: 'We set up monitoring, alerts, and fallback workflows. You\'ll know immediately if something needs attention, and most issues self-recover.' },
-  { q: 'What\'s the ROI timeline?', a: 'Most clients see positive ROI within the first month. The average time savings is 15–30 hours per week per team.' },
+  { q: 'What\'s the ROI timeline?', a: 'Most clients see positive ROI within the first month. The average time savings is 15-30 hours per week per team.' },
   { q: 'Do you provide ongoing maintenance?', a: 'Yes. Every project includes 30 days of optimization. Extended maintenance plans are available for continuous improvement.' },
 ]
 
-/* ─── Pain Points — Neumorphism Horizontal Scroll ─── */
+/* ─── Pain Points - Neumorphism Horizontal Scroll ─── */
 const painGlows = ['blue', 'amber', 'violet', 'emerald', 'pink', 'cyan']
 const painColors = {
   blue:    '#3b82f6', amber: '#f59e0b', violet: '#8b5cf6',
@@ -319,7 +319,7 @@ function PainPointsSection() {
   )
 }
 
-/* ─── Capabilities — Neumorphism Horizontal Scroll ─── */
+/* ─── Capabilities - Neumorphism Horizontal Scroll ─── */
 function CapabilitiesSection() {
   const sectionRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end end'] })
@@ -677,7 +677,7 @@ function App() {
                 Our Automation Stack
               </h2>
               <p className="text-muted mt-6 max-w-lg mx-auto font-light text-lg">
-                Integrations, orchestration, and AI—selected for reliability in production environments.
+                Integrations, orchestration, and AI - selected for reliability in production environments.
               </p>
             </div>
           </Reveal>
@@ -715,7 +715,7 @@ function App() {
                 Enterprise-Ready Automation
               </h2>
               <p className="text-muted mt-6 max-w-2xl mx-auto font-light text-lg">
-                MechLinks.ai connects systems, standardizes workflows, and adds intelligence to operations—so teams can move faster with fewer incidents.
+                MechLinks.ai connects systems, standardizes workflows, and adds intelligence to operations - so teams can move faster with fewer incidents.
               </p>
             </div>
           </Reveal>
@@ -885,7 +885,7 @@ function App() {
                   Talk to Sales
                 </h2>
                 <p className="text-muted mt-4 font-light">
-                  Tell us what you want to automate—production, maintenance, logistics, or reporting—and we’ll propose an implementation plan.
+                  Tell us what you want to automate production, maintenance, logistics, or reporting and we'll propose an implementation plan.
                 </p>
               </Reveal>
               <Reveal delay={0.15}>
