@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
-import { motion, useInView, useScroll, useTransform, AnimatePresence, useMotionValueEvent } from 'framer-motion'
+import { motion, useInView, useScroll, useTransform, AnimatePresence } from 'framer-motion'
+import Lenis from 'lenis'
 import {
   ArrowRight, Zap, Clock, ShieldCheck, TrendingUp, RefreshCw, Plug,
   BarChart3, MessageSquare, Target, Mail, Bot, Database, Lock, ShoppingCart,
@@ -70,6 +71,314 @@ function Particles() {
   )
 }
 
+/* ─── 3D Automation Network (Three.js) ─── */
+import * as THREE from 'three'
+
+function ThreeNetworkBg() {
+  const containerRef = useRef(null)
+
+  useEffect(() => {
+    if (!containerRef.current) return
+
+    // Scene setup
+    const scene = new THREE.Scene()
+    
+    // Camera
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+    camera.position.z = 25
+
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
+    renderer.setSize(window.innerWidth, window.innerHeight)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    containerRef.current.appendChild(renderer.domElement)
+
+    // Groups
+    const networkGroup = new THREE.Group()
+    scene.add(networkGroup)
+
+    // Objects
+    const nodes = []
+    const connections = []
+    const particles = []
+
+    // Materials - Modern Tech Style with Additive Blending
+    const nodeMaterial = new THREE.MeshBasicMaterial({ 
+      color: 0x0FB6D4,
+      transparent: true,
+      opacity: 0.9,
+      blending: THREE.AdditiveBlending
+    })
+    
+    const nodeGlowMaterial = new THREE.MeshBasicMaterial({ 
+      color: 0x0FB6D4, 
+      transparent: true, 
+      opacity: 0.2,
+      blending: THREE.AdditiveBlending,
+      side: THREE.BackSide
+    })
+    
+    const connectionMaterial = new THREE.LineBasicMaterial({ 
+      color: 0x0FB6D4, 
+      transparent: true, 
+      opacity: 0.12,
+      blending: THREE.AdditiveBlending
+    })
+    
+    const particleMaterial = new THREE.MeshBasicMaterial({ 
+      color: 0xffffff,
+      transparent: true,
+      opacity: 0.9,
+      blending: THREE.AdditiveBlending
+    })
+
+    // Geometries
+    const nodeGeometry = new THREE.IcosahedronGeometry(0.2, 0)
+    const glowGeometry = new THREE.IcosahedronGeometry(0.5, 1)
+    const particleGeometry = new THREE.SphereGeometry(0.06, 4, 4)
+
+    const nodeCount = 40
+    
+    // Create Nodes
+    for (let i = 0; i < nodeCount; i++) {
+      const group = new THREE.Group()
+      
+      // Core
+      const mesh = new THREE.Mesh(nodeGeometry, nodeMaterial.clone())
+      group.add(mesh)
+      
+      // Glow/Shield
+      const glow = new THREE.Mesh(glowGeometry, nodeGlowMaterial.clone())
+      group.add(glow)
+
+      // Position - distributed in a cloud
+      group.position.x = (Math.random() - 0.5) * 55
+      group.position.y = (Math.random() - 0.5) * 35
+      group.position.z = (Math.random() - 0.5) * 25
+      
+      // Data
+      group.userData = {
+        velocity: new THREE.Vector3(
+          (Math.random() - 0.5) * 0.01,
+          (Math.random() - 0.5) * 0.01,
+          (Math.random() - 0.5) * 0.01
+        ),
+        pulseSpeed: 0.01 + Math.random() * 0.02,
+        pulseOffset: Math.random() * Math.PI * 2,
+        originalColor: new THREE.Color(Math.random() > 0.6 ? 0x0FB6D4 : 0x3b82f6) // Cyan or Blue
+      }
+      
+      // Set color
+      mesh.material.color = group.userData.originalColor
+      glow.material.color = group.userData.originalColor
+
+      networkGroup.add(group)
+      nodes.push({ group, mesh, glow })
+    }
+
+    // Create Data Particles
+    const particleCount = 30
+    for (let i = 0; i < particleCount; i++) {
+      const mesh = new THREE.Mesh(particleGeometry, particleMaterial)
+      mesh.userData = {
+        currentNodeIndex: Math.floor(Math.random() * nodeCount),
+        targetNodeIndex: Math.floor(Math.random() * nodeCount),
+        progress: 0,
+        speed: 0.005 + Math.random() * 0.01
+      }
+      networkGroup.add(mesh)
+      particles.push(mesh)
+    }
+
+    // Interaction
+    let mouseX = 0
+    let mouseY = 0
+    const windowHalfX = window.innerWidth / 2
+    const windowHalfY = window.innerHeight / 2
+
+    const handleMouseMove = (event) => {
+      mouseX = (event.clientX - windowHalfX) * 0.0005
+      mouseY = (event.clientY - windowHalfY) * 0.0005
+    }
+    window.addEventListener('mousemove', handleMouseMove)
+
+    // Resize
+    const handleResize = () => {
+      const width = window.innerWidth
+      const height = window.innerHeight
+      camera.aspect = width / height
+      camera.updateProjectionMatrix()
+      renderer.setSize(width, height)
+    }
+    window.addEventListener('resize', handleResize)
+
+    // Animation Loop
+    let time = 0
+    const animate = () => {
+      requestAnimationFrame(animate)
+      time += 0.01
+
+      // Rotate entire network slowly for kinetic feel
+      networkGroup.rotation.y += 0.0003
+      
+      // Gentle mouse parallax
+      networkGroup.rotation.x += (mouseY * 0.5 - networkGroup.rotation.x) * 0.02
+      networkGroup.rotation.y += (mouseX * 0.5 - networkGroup.rotation.y) * 0.02
+
+      // Animate Nodes
+      nodes.forEach(node => {
+        // Move
+        node.group.position.add(node.group.userData.velocity)
+        
+        // Bounce bounds
+        if (Math.abs(node.group.position.x) > 35) node.group.userData.velocity.x *= -1
+        if (Math.abs(node.group.position.y) > 25) node.group.userData.velocity.y *= -1
+        if (Math.abs(node.group.position.z) > 15) node.group.userData.velocity.z *= -1
+
+        // Pulse effect
+        const scale = 1 + Math.sin(time * 2 + node.group.userData.pulseOffset) * 0.15
+        node.glow.scale.setScalar(scale)
+        node.glow.rotation.y += 0.01
+        node.glow.rotation.z += 0.005
+      })
+
+      // Draw Connections
+      connections.forEach(line => networkGroup.remove(line))
+      connections.length = 0
+
+      // Connect nearby nodes
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dist = nodes[i].group.position.distanceTo(nodes[j].group.position)
+          if (dist < 12) { // Connection distance threshold
+            const positions = new Float32Array([
+              nodes[i].group.position.x, nodes[i].group.position.y, nodes[i].group.position.z,
+              nodes[j].group.position.x, nodes[j].group.position.y, nodes[j].group.position.z
+            ])
+            const geometry = new THREE.BufferGeometry()
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+            
+            const material = connectionMaterial.clone()
+            // Fade opacity based on distance
+            material.opacity = (1 - (dist / 12)) * 0.15
+            material.color = nodes[i].group.userData.originalColor // Inherit color
+            
+            const line = new THREE.Line(geometry, material)
+            networkGroup.add(line)
+            connections.push(line)
+          }
+        }
+      }
+
+      // Animate Particles
+      particles.forEach(p => {
+        // Ensure valid path
+        if (p.userData.currentNodeIndex === p.userData.targetNodeIndex) {
+           p.userData.targetNodeIndex = Math.floor(Math.random() * nodeCount)
+           return
+        }
+
+        const from = nodes[p.userData.currentNodeIndex].group.position
+        const to = nodes[p.userData.targetNodeIndex].group.position
+        
+        // Check if nodes are connected (distance check) - visually consistent
+        if (from.distanceTo(to) > 14) {
+           // If too far, instantly jump to a new random start to find a better path
+           p.userData.currentNodeIndex = Math.floor(Math.random() * nodeCount)
+           p.userData.progress = 0
+           return
+        }
+
+        p.userData.progress += p.userData.speed
+        
+        if (p.userData.progress >= 1) {
+          p.userData.progress = 0
+          p.userData.currentNodeIndex = p.userData.targetNodeIndex
+          p.userData.targetNodeIndex = Math.floor(Math.random() * nodeCount)
+        }
+
+        p.position.lerpVectors(from, to, p.userData.progress)
+      })
+
+      renderer.render(scene, camera)
+    }
+
+    animate()
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('mousemove', handleMouseMove)
+      if (containerRef.current) {
+        containerRef.current.removeChild(renderer.domElement)
+      }
+      
+      // Dispose Geometries/Materials
+      nodeGeometry.dispose()
+      glowGeometry.dispose()
+      particleGeometry.dispose()
+      nodeMaterial.dispose()
+      nodeGlowMaterial.dispose()
+      connectionMaterial.dispose()
+      particleMaterial.dispose()
+      renderer.dispose()
+    }
+  }, [])
+
+  return (
+    <div 
+      ref={containerRef} 
+      className="fixed inset-0 pointer-events-none z-0"
+      style={{ opacity: 0.5 }} 
+    />
+  )
+}
+
+/* ─── Floating Automation Elements (2D Overlay) ─── */
+function FloatingElements() {
+  const elements = [
+    { icon: Zap, color: '#3b82f6', x: 10, y: 20, delay: 0 },
+    { icon: Database, color: '#8b5cf6', x: 85, y: 25, delay: 1 },
+    { icon: RefreshCw, color: '#06b6d4', x: 20, y: 75, delay: 2 },
+    { icon: Mail, color: '#f97316', x: 80, y: 70, delay: 3 },
+    { icon: Check, color: '#22c55e', x: 50, y: 15, delay: 4 },
+    { icon: Layers, color: '#ec4899', x: 15, y: 50, delay: 1.5 },
+    { icon: ShieldCheck, color: '#10b981', x: 75, y: 45, delay: 3.5 },
+  ]
+
+  return (
+    <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+      {elements.map((el, i) => (
+        <motion.div
+          key={i}
+          className="absolute"
+          style={{ 
+            left: `${el.x}%`, 
+            top: `${el.y}%`,
+            color: el.color,
+            opacity: 0.3
+          }}
+          animate={{
+            y: [0, -30, 0],
+            rotate: [0, 10, -10, 0],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 5 + Math.random() * 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: el.delay
+          }}
+        >
+          <div className="p-3 rounded-2xl" style={{ background: `${el.color}10`, border: `1px solid ${el.color}20` }}>
+            <el.icon size={24} />
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  )
+}
+
 /* ─── Animated flow diagram ─── */
 function AutomationFlow() {
   const steps = [
@@ -80,38 +389,61 @@ function AutomationFlow() {
     { icon: ShieldCheck, label: 'Uptime Restored', color: '#f59e0b' },
   ]
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-0">
-      {steps.map((step, i) => (
-        <div key={i} className="flex items-center">
-          <Reveal delay={i * 0.15}>
+    <>
+      {/* Desktop: horizontal flow with connectors */}
+      <div className="hidden md:flex items-center justify-center">
+        {steps.map((step, i) => (
+          <div key={i} className="flex items-center">
+            <Reveal delay={i * 0.15}>
+              <motion.div
+                whileHover={{ scale: 1.08, y: -4 }}
+                className="glass-card-strong flex flex-col items-center gap-3 px-5 py-6 rounded-2xl min-w-[140px]"
+              >
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center"
+                  style={{ background: `${step.color}25` }}
+                >
+                  <step.icon size={22} style={{ color: step.color }} />
+                </div>
+                <span className="text-xs font-medium text-muted">{step.label}</span>
+              </motion.div>
+            </Reveal>
+            {i < steps.length - 1 && (
+              <motion.div
+                initial={{ opacity: 0, scaleX: 0 }}
+                whileInView={{ opacity: 1, scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15 + 0.3, duration: 0.5 }}
+                className="flex items-center mx-2"
+              >
+                <div className="w-10 h-px flow-connector" />
+                <ChevronRight size={14} className="text-muted-light -ml-1" />
+              </motion.div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Mobile: 2-column grid */}
+      <div className="grid grid-cols-2 gap-3 md:hidden max-w-sm mx-auto">
+        {steps.map((step, i) => (
+          <Reveal key={i} delay={i * 0.08}>
             <motion.div
-              whileHover={{ scale: 1.08, y: -4 }}
-              className="glass-card-strong flex flex-col items-center gap-3 px-5 py-6 rounded-2xl min-w-[140px]"
+              whileHover={{ scale: 1.05 }}
+              className="glass-card-strong flex flex-col items-center gap-2 px-3 py-4 rounded-xl"
             >
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center"
+                className="w-10 h-10 rounded-lg flex items-center justify-center"
                 style={{ background: `${step.color}25` }}
               >
-                <step.icon size={22} style={{ color: step.color }} />
+                <step.icon size={18} style={{ color: step.color }} />
               </div>
-              <span className="text-xs font-medium text-muted">{step.label}</span>
+              <span className="text-[11px] font-medium text-muted text-center">{step.label}</span>
             </motion.div>
           </Reveal>
-          {i < steps.length - 1 && (
-            <motion.div
-              initial={{ opacity: 0, scaleX: 0 }}
-              whileInView={{ opacity: 1, scaleX: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15 + 0.3, duration: 0.5 }}
-              className="hidden md:flex items-center mx-2"
-            >
-              <div className="w-10 h-px flow-connector" />
-              <ChevronRight size={14} className="text-muted-light -ml-1" />
-            </motion.div>
-          )}
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </>
   )
 }
 
@@ -138,42 +470,42 @@ const workflows = [
   { icon: Building2, title: 'Multi-Site Rollout', desc: 'Standardized templates, site onboarding, training, monitoring, continuous improvement', color: '#14b8a6', iconBg: 'icon-bg-teal' },
 ]
 
- const useCases = [
-   {
-     icon: Layers,
-     title: 'Textile',
-     points: ['Quality inspection workflows', 'Production planning sync', 'Predictive maintenance alerts', 'Reduced rework & wastage'],
-     color: '#3b82f6',
-   },
-   {
-     icon: ShieldCheck,
-     title: 'Pharma',
-     points: ['Compliance-ready automation', 'Batch traceability & audit logs', 'Deviation detection and routing', 'Controlled approvals'],
-     color: '#10b981',
-   },
-   {
-     icon: Share2,
-     title: 'Logistics',
-     points: ['Warehouse orchestration', 'Routing optimization triggers', 'Exception handling workflows', 'SLA monitoring & alerts'],
-     color: '#8b5cf6',
-   },
-   {
-     icon: Cpu,
-     title: 'Manufacturing',
-     points: ['OEE improvement loops', 'Downtime root-cause workflows', 'Maintenance ticket automation', 'Spare parts coordination'],
-     color: '#f59e0b',
-   },
- ]
+const useCases = [
+  {
+    icon: Layers,
+    title: 'Textile',
+    points: ['Quality inspection workflows', 'Production planning sync', 'Predictive maintenance alerts', 'Reduced rework & wastage'],
+    color: '#3b82f6',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Pharma',
+    points: ['Compliance-ready automation', 'Batch traceability & audit logs', 'Deviation detection and routing', 'Controlled approvals'],
+    color: '#10b981',
+  },
+  {
+    icon: Share2,
+    title: 'Logistics',
+    points: ['Warehouse orchestration', 'Routing optimization triggers', 'Exception handling workflows', 'SLA monitoring & alerts'],
+    color: '#8b5cf6',
+  },
+  {
+    icon: Cpu,
+    title: 'Manufacturing',
+    points: ['OEE improvement loops', 'Downtime root-cause workflows', 'Maintenance ticket automation', 'Spare parts coordination'],
+    color: '#f59e0b',
+  },
+]
 
 const techStack = [
-  { name: 'OPC UA', desc: 'Industrial connectivity', category: 'Integration' },
-  { name: 'MQTT', desc: 'IoT messaging', category: 'Integration' },
-  { name: 'SCADA / HMI', desc: 'Operations visibility', category: 'Operations' },
-  { name: 'MES / ERP', desc: 'Production + planning', category: 'Operations' },
-  { name: 'Data Historian', desc: 'Time series storage', category: 'Data' },
-  { name: 'n8n / Node-RED', desc: 'Orchestration', category: 'Automation' },
-  { name: 'AI Models', desc: 'Anomaly detection', category: 'AI' },
-  { name: 'Custom APIs', desc: 'Bespoke solutions', category: 'Custom' },
+  { name: 'OPC UA', desc: 'Industrial connectivity', category: 'Integration', icon: Plug, color: '#3b82f6' },
+  { name: 'MQTT', desc: 'IoT messaging', category: 'Integration', icon: Share2, color: '#8b5cf6' },
+  { name: 'SCADA / HMI', desc: 'Operations visibility', category: 'Operations', icon: BarChart3, color: '#06b6d4' },
+  { name: 'MES / ERP', desc: 'Production + planning', category: 'Operations', icon: Building2, color: '#10b981' },
+  { name: 'Data Historian', desc: 'Time series storage', category: 'Data', icon: Database, color: '#f59e0b' },
+  { name: 'n8n / Node-RED', desc: 'Orchestration', category: 'Automation', icon: RefreshCw, color: '#ec4899' },
+  { name: 'AI Models', desc: 'Anomaly detection', category: 'AI', icon: Cpu, color: '#8b5cf6' },
+  { name: 'Custom APIs', desc: 'Bespoke solutions', category: 'Custom', icon: Code2, color: '#3b82f6' },
 ]
 
 const timeline = [
@@ -195,249 +527,212 @@ const faqs = [
 /* ─── Pain Points - Neumorphism Horizontal Scroll ─── */
 const painGlows = ['blue', 'amber', 'violet', 'emerald', 'pink', 'cyan']
 const painColors = {
-  blue:    '#3b82f6', amber: '#f59e0b', violet: '#8b5cf6',
-  emerald: '#10b981', pink:  '#ec4899', cyan:   '#06b6d4',
+  blue: '#3b82f6', amber: '#f59e0b', violet: '#8b5cf6',
+  emerald: '#10b981', pink: '#ec4899', cyan: '#06b6d4',
 }
 
 function PainPointsSection() {
-  const sectionRef = useRef(null)
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end end'] })
-  const count = painPoints.length
-  const x = useTransform(scrollYProgress, [0, 1], ['0vw', `-${(count - 1) * 100}vw`])
-  const [active, setActive] = useState(0)
-  useMotionValueEvent(scrollYProgress, 'change', v => {
-    const n = Math.max(0, Math.min(1, v))
-    setActive(Math.round(n * (count - 1)))
-  })
-
   return (
-    <section ref={sectionRef} id="problems" style={{ height: `${(count + 1) * 100}vh` }} className="relative neuro-section">
-      <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
-        {/* Header */}
-        <div className="flex-shrink-0 text-center pt-20 pb-6 px-6">
-          <motion.span
-            initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-            className="inline-block text-xs font-bold tracking-[0.2em] uppercase mb-3"
-            style={{ color: 'rgba(96,165,250,0.9)' }}
-          >The Problem</motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight"
-          >
-            Manual Work <span style={{ color: 'var(--text-muted)' }}>Killing Your Growth</span>
-          </motion.h2>
-          {/* Progress dots */}
-          <div className="flex items-center justify-center gap-3 mt-5">
-            {painPoints.map((_, i) => (
-              <div
-                key={i}
-                className={`neuro-progress-dot ${i === active ? 'neuro-progress-dot-active' : ''}`}
-                style={{
-                  width: i === active ? 32 : 10, height: 10,
-                  background: i === active ? painColors[painGlows[i]] : undefined,
-                  boxShadow: i === active ? `0 0 12px ${painColors[painGlows[i]]}80` : undefined,
-                }}
-              />
-            ))}
+    <section id="problems" className="relative py-24 px-6 neuro-section">
+      {/* Header */}
+      <div className="max-w-6xl mx-auto">
+        <Reveal>
+          <div className="text-center mb-16">
+            <span
+              className="inline-block text-sm font-bold tracking-[0.2em] uppercase mb-4"
+              style={{ color: 'rgba(96,165,250,0.9)' }}
+            >The Problem</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+              Manual Work <span style={{ color: 'var(--text-muted)' }}>Killing Your Growth</span>
+            </h2>
+            <p className="text-muted mt-6 max-w-2xl mx-auto text-lg">
+              These common pain points are costing your team hours every week. We automate them all.
+            </p>
           </div>
-        </div>
+        </Reveal>
 
-        {/* Scrolling cards */}
-        <div className="flex-1 flex items-center overflow-hidden px-0">
-          <motion.div style={{ x }} className="flex will-change-transform">
-            {painPoints.map((item, i) => {
-              const glow = painGlows[i]
-              const color = painColors[glow]
-              return (
-                <div key={i} style={{ width: '100vw', flexShrink: 0 }} className="flex items-center justify-center px-6 sm:px-12">
-                  <motion.div
-                    className={`neuro-card w-full relative overflow-hidden ${i === active ? 'neuro-card-active' : ''}`}
-                    style={{ maxWidth: 780, height: 'clamp(380px, 58vh, 520px)' }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    {/* Big ghost number */}
-                    <span className="neuro-card-num select-none">0{i + 1}</span>
-
-                    <div className="relative z-10 h-full flex flex-col justify-between p-8 sm:p-10">
-                      {/* Top: icon + badge */}
-                      <div className="flex items-start justify-between">
-                        <div className="neuro-inset flex items-center justify-center" style={{ width: 72, height: 72, background: `${color}12` }}>
-                          <item.icon size={28} style={{ color }} />
-                        </div>
-                        <div className="neuro-badge px-4 py-1.5">
-                          <span className="text-xs font-bold tracking-widest uppercase" style={{ color: 'var(--text-muted)' }}>
-                            Pain {String(i + 1).padStart(2, '0')}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Title */}
-                      <div>
-                        <h3 className="text-2xl sm:text-3xl font-bold mb-3" style={{ color: 'var(--text-primary)' }}>{item.title}</h3>
-                        <p className="text-sm sm:text-base leading-relaxed" style={{ color: 'var(--text-muted)', maxWidth: 520 }}>
-                          {item.problem}
-                        </p>
-                      </div>
-
-                      {/* Solution bar */}
-                      <div>
-                        <div className="neuro-divider mb-5" />
-                        <div className="flex items-start gap-3">
-                          <div className="neuro-inset mt-0.5 flex items-center justify-center shrink-0" style={{ width: 28, height: 28 }}>
-                            <Check size={14} style={{ color: 'var(--accent-success)' }} />
-                          </div>
-                          <p className="text-sm sm:text-base font-semibold" style={{ color: 'var(--accent-success)' }}>{item.solution}</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Accent glow blob */}
-                    <div
-                      className="neuro-accent-blob absolute -bottom-16 -right-16 w-48 h-48 rounded-full pointer-events-none"
-                      style={{ background: `radial-gradient(circle, ${color}35 0%, transparent 70%)`, filter: 'blur(30px)' }}
-                    />
-                  </motion.div>
-                </div>
-              )
-            })}
-          </motion.div>
-        </div>
-
-        {/* Scroll hint */}
-        <div className="flex-shrink-0 flex items-center justify-center gap-3 pb-8">
-          <div className="neuro-scroll-hint px-5 py-2 flex items-center gap-2">
-            <motion.div animate={{ y: [0, 4, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>
-              <ChevronDown size={14} style={{ color: 'var(--text-muted)' }} />
-            </motion.div>
-            <span className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>
-              Scroll to explore &nbsp;{active + 1} / {count}
-            </span>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* ─── Capabilities - Neumorphism Horizontal Scroll ─── */
-function CapabilitiesSection() {
-  const sectionRef = useRef(null)
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end end'] })
-  const count = workflows.length
-  const x = useTransform(scrollYProgress, [0, 1], ['0vw', `-${(count - 1) * 100}vw`])
-  const [active, setActive] = useState(0)
-  useMotionValueEvent(scrollYProgress, 'change', v => {
-    const n = Math.max(0, Math.min(1, v))
-    setActive(Math.round(n * (count - 1)))
-  })
-
-  return (
-    <section ref={sectionRef} id="workflows" style={{ height: `${(count + 1) * 100}vh` }} className="relative neuro-section">
-      <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
-        {/* Header */}
-        <div className="flex-shrink-0 text-center pt-20 pb-6 px-6">
-          <motion.span
-            initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-            className="inline-block text-xs font-bold tracking-[0.2em] uppercase mb-3"
-            style={{ color: 'rgba(96,165,250,0.9)' }}
-          >Capabilities</motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight"
-          >
-            Every Workflow. <span style={{ color: 'var(--text-muted)' }}>Any Complexity.</span>
-          </motion.h2>
-          {/* Progress dots */}
-          <div className="flex items-center justify-center gap-2 mt-5 flex-wrap">
-            {workflows.map((wf, i) => (
-              <div
-                key={i}
-                className={`neuro-progress-dot ${i === active ? 'neuro-progress-dot-active' : ''}`}
-                style={{
-                  width: i === active ? 28 : 8, height: 8,
-                  background: i === active ? wf.color : undefined,
-                  boxShadow: i === active ? `0 0 10px ${wf.color}80` : undefined,
-                }}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Scrolling cards */}
-        <div className="flex-1 flex items-center overflow-hidden">
-          <motion.div style={{ x }} className="flex will-change-transform">
-            {workflows.map((item, i) => (
-              <div key={i} style={{ width: '100vw', flexShrink: 0 }} className="flex items-center justify-center px-6 sm:px-12">
+        {/* Simple 2-column grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {painPoints.map((item, i) => {
+            const glow = painGlows[i]
+            const color = painColors[glow]
+            return (
+              <Reveal key={i} delay={i * 0.08}>
                 <motion.div
-                  className={`neuro-card w-full relative overflow-hidden ${i === active ? 'neuro-card-active' : ''}`}
-                  style={{ maxWidth: 720, height: 'clamp(360px, 55vh, 500px)' }}
-                  transition={{ duration: 0.5 }}
+                  whileHover={{ y: -4 }}
+                  className="group pain-card relative overflow-hidden cursor-pointer h-full"
+                  style={{ minHeight: 320 }}
                 >
                   {/* Big ghost number */}
-                  <span className="neuro-card-num select-none">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="neuro-card-num select-none" style={{ fontSize: 'clamp(80px, 12vw, 140px)' }}>0{i + 1}</span>
 
-                  <div className="relative z-10 h-full flex flex-col justify-between p-8 sm:p-10">
-                    {/* Top */}
-                    <div className="flex items-start justify-between">
-                      <div className={`neuro-inset flex items-center justify-center ${item.iconBg}`} style={{ width: 72, height: 72 }}>
-                        <item.icon size={28} style={{ color: item.color }} />
+                  <div className="relative z-10 h-full flex flex-col p-7">
+                    {/* Top: icon + badge */}
+                    <div className="flex items-start justify-between mb-5">
+                      <div
+                        className="flex items-center justify-center rounded-xl transition-all duration-300"
+                        style={{
+                          width: 52,
+                          height: 52,
+                          background: `${color}18`,
+                          border: `1px solid ${color}25`
+                        }}
+                      >
+                        <item.icon size={24} style={{ color }} />
                       </div>
-                      <div className="neuro-badge px-4 py-1.5">
-                        <span className="text-xs font-bold tracking-widest uppercase" style={{ color: 'var(--text-muted)' }}>
-                          {String(i + 1).padStart(2, '0')} / {String(count).padStart(2, '0')}
-                        </span>
-                      </div>
+                      <span
+                        className="text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full"
+                        style={{ background: `${color}15`, color, border: `1px solid ${color}30` }}
+                      >
+                        Pain {String(i + 1).padStart(2, '0')}
+                      </span>
                     </div>
 
-                    {/* Content */}
-                    <div>
-                      <h3 className="text-2xl sm:text-3xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>{item.title}</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {item.desc.split(', ').map((tag, j) => (
-                          <span
-                            key={j}
-                            className="neuro-badge text-xs px-3 py-1 font-medium"
-                            style={{ color: 'var(--text-muted)' }}
-                          >{tag}</span>
-                        ))}
-                      </div>
+                    {/* Title & Description */}
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--text-primary)' }}>{item.title}</h3>
+                      <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                        {item.problem}
+                      </p>
                     </div>
 
-                    {/* Bottom accent line */}
-                    <div>
-                      <div className="neuro-divider mb-5" />
-                      <div className="flex items-center gap-3">
-                        <div className="h-1 rounded-full flex-1" style={{ background: `linear-gradient(90deg, ${item.color}60, transparent)` }} />
-                        <span className="text-xs font-semibold uppercase tracking-wider neuro-accent-text" style={{ color: item.color }}>Automated</span>
+                    {/* Solution bar */}
+                    <div className="mt-5 pt-5" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+                      <div className="flex items-start gap-3">
+                        <Check size={16} style={{ color: 'var(--accent-success)', marginTop: 2 }} />
+                        <p className="text-sm font-medium" style={{ color: 'var(--accent-success)' }}>{item.solution}</p>
                       </div>
                     </div>
                   </div>
 
+                  {/* Accent glow blob */}
                   <div
-                    className="neuro-accent-blob absolute -bottom-16 -right-16 w-56 h-56 rounded-full pointer-events-none"
-                    style={{ background: `radial-gradient(circle, ${item.color}35 0%, transparent 70%)`, filter: 'blur(30px)' }}
+                    className="neuro-accent-blob absolute -bottom-12 -right-12 w-32 h-32 rounded-full pointer-events-none"
+                    style={{ background: `radial-gradient(circle, ${color}25 0%, transparent 70%)`, filter: 'blur(25px)' }}
                   />
                 </motion.div>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Scroll hint */}
-        <div className="flex-shrink-0 flex items-center justify-center gap-3 pb-8">
-          <div className="neuro-scroll-hint px-5 py-2 flex items-center gap-2">
-            <motion.div animate={{ y: [0, 4, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>
-              <ChevronDown size={14} style={{ color: 'var(--text-muted)' }} />
-            </motion.div>
-            <span className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>
-              Scroll to explore &nbsp;{active + 1} / {count}
-            </span>
-          </div>
+              </Reveal>
+            )
+          })}
         </div>
       </div>
     </section>
   )
 }
+
+/* ─── Capabilities - 2 Column Grid ─── */
+function CapabilitiesSection() {
+  const count = workflows.length
+
+  return (
+    <section id="workflows" className="relative py-24 px-6 neuro-section">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <Reveal>
+          <div className="text-center mb-16">
+            <span
+              className="inline-block text-lg font-bold tracking-[0.2em] uppercase mb-4"
+              style={{ color: 'rgba(96,165,250,0.9)' }}
+            >Capabilities</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+              Every Workflow. <span style={{ color: 'var(--text-muted)' }}>Any Complexity.</span>
+            </h2>
+            <p className="text-muted mt-6 max-w-2xl mx-auto text-lg">
+              End-to-end automation across every layer of your industrial operation.
+            </p>
+          </div>
+        </Reveal>
+
+        {/* 2-column grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {workflows.map((item, i) => (
+            <Reveal key={i} delay={i * 0.06}>
+              <motion.div
+                whileHover={{ y: -6 }}
+                className="neuro-card relative overflow-hidden cursor-pointer h-full"
+                style={{ minHeight: 280 }}
+              >
+                {/* Big ghost number */}
+                <span className="neuro-card-num select-none" style={{ fontSize: 'clamp(70px, 10vw, 130px)' }}>
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+
+                <div className="relative z-10 h-full flex flex-col p-7">
+                  {/* Top: icon + badge */}
+                  <div className="flex items-start justify-between mb-5">
+                    <div
+                      className="flex items-center justify-center rounded-xl transition-all duration-300"
+                      style={{
+                        width: 52,
+                        height: 52,
+                        background: `${item.color}18`,
+                        border: `1px solid ${item.color}25`
+                      }}
+                    >
+                      <item.icon size={24} style={{ color: item.color }} />
+                    </div>
+                    <span
+                      className="text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full"
+                      style={{
+                        background: `${item.color}15`,
+                        color: item.color,
+                        border: `1px solid ${item.color}30`
+                      }}
+                    >
+                      {String(i + 1).padStart(2, '0')} / {String(count).padStart(2, '0')}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+                      {item.title}
+                    </h3>
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2">
+                      {item.desc.split(', ').map((tag, j) => (
+                        <span
+                          key={j}
+                          className="text-[11px] px-2.5 py-1 rounded-full font-medium"
+                          style={{
+                            background: `${item.color}12`,
+                            color: 'var(--text-muted)',
+                            border: `1px solid ${item.color}20`
+                          }}
+                        >{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Bottom accent bar */}
+                  <div className="mt-5 pt-5" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="h-1 rounded-full flex-1"
+                        style={{ background: `linear-gradient(90deg, ${item.color}60, transparent)` }}
+                      />
+                      <span
+                        className="text-xs font-semibold uppercase tracking-wider"
+                        style={{ color: item.color }}
+                      >Automated</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Accent glow blob */}
+                <div
+                  className="neuro-accent-blob absolute -bottom-12 -right-12 w-40 h-40 rounded-full pointer-events-none"
+                  style={{ background: `radial-gradient(circle, ${item.color}30 0%, transparent 70%)`, filter: 'blur(28px)' }}
+                />
+              </motion.div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 
 /* ─── MAIN APP ─── */
 function App() {
@@ -450,6 +745,23 @@ function App() {
   const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.95])
 
   useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      smoothWheel: true,
+    })
+
+    function raf(time) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+    requestAnimationFrame(raf)
+
+    return () => lenis.destroy()
+  }, [])
+
+  useEffect(() => {
     document.documentElement.dataset.theme = theme === 'light' ? 'light' : ''
     localStorage.setItem('theme', theme)
   }, [theme])
@@ -459,6 +771,10 @@ function App() {
 
   return (
     <div className="relative min-h-screen" style={{ background: 'var(--bg)', color: 'var(--text-primary)' }}>
+      {/* ─── 3D Automation Network Background ─── */}
+      <ThreeNetworkBg />
+      <FloatingElements />
+
       {/* ─── NAV ─── */}
       <motion.nav
         initial={{ y: -20, opacity: 0 }}
@@ -623,7 +939,7 @@ function App() {
         <div className="max-w-6xl mx-auto relative z-10">
           <Reveal>
             <div className="text-center mb-20">
-              <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: '#3b82f6', letterSpacing: '0.2em' }}>Use Cases</span>
+              <span className="text-sm font-semibold tracking-widest uppercase" style={{ color: '#3b82f6', letterSpacing: '0.2em' }}>Use Cases</span>
               <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mt-4">
                 Built for Industrial Operations
               </h2>
@@ -672,7 +988,7 @@ function App() {
         <div className="max-w-5xl mx-auto relative z-10">
           <Reveal>
             <div className="text-center mb-20">
-              <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: '#06b6d4', letterSpacing: '0.2em' }}>Technology</span>
+              <span className="text-sm font-semibold tracking-widest uppercase" style={{ color: '#06b6d4', letterSpacing: '0.2em' }}>Technology</span>
               <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mt-4">
                 Our Automation Stack
               </h2>
@@ -681,14 +997,29 @@ function App() {
               </p>
             </div>
           </Reveal>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
             {techStack.map((item, i) => (
               <Reveal key={i} delay={i * 0.06}>
-                <div className="group glass-card-strong p-6 rounded-2xl text-center">
-                  <span className="text-[10px] font-semibold tracking-widest uppercase text-muted-extra">{item.category}</span>
-                  <h3 className="text-base font-semibold mt-2">{item.name}</h3>
-                  <p className="text-xs text-muted-light mt-1">{item.desc}</p>
-                </div>
+                <motion.div
+                  whileHover={{ y: -6 }}
+                  className="glass-card-strong p-4 md:p-7 rounded-2xl md:rounded-3xl h-full cursor-pointer"
+                >
+                  <div
+                    className="w-9 h-9 md:w-12 md:h-12 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-5"
+                    style={{ background: `${item.color}18` }}
+                  >
+                    <item.icon size={18} className="md:hidden" style={{ color: item.color }} />
+                    <item.icon size={22} className="hidden md:block" style={{ color: item.color }} />
+                  </div>
+                  <span
+                    className="inline-block text-[8px] md:text-[10px] font-semibold tracking-widest uppercase px-2 py-1 md:px-3 md:py-1.5 rounded-full"
+                    style={{ background: `${item.color}12`, color: item.color, border: `1px solid ${item.color}25` }}
+                  >
+                    {item.category}
+                  </span>
+                  <h3 className="text-sm md:text-lg font-semibold mt-2.5 md:mt-4 mb-1 md:mb-2">{item.name}</h3>
+                  <p className="text-[11px] md:text-sm text-muted font-light leading-snug md:leading-relaxed">{item.desc}</p>
+                </motion.div>
               </Reveal>
             ))}
           </div>
@@ -710,7 +1041,7 @@ function App() {
         <div className="max-w-6xl mx-auto relative z-10">
           <Reveal>
             <div className="text-center mb-16">
-              <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: '#10b981', letterSpacing: '0.2em' }}>About</span>
+              <span className="text-sm font-semibold tracking-widest uppercase" style={{ color: '#10b981', letterSpacing: '0.2em' }}>About</span>
               <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mt-4">
                 Enterprise-Ready Automation
               </h2>
@@ -752,7 +1083,7 @@ function App() {
         <div className="max-w-6xl mx-auto">
           <Reveal>
             <div className="text-center mb-20">
-              <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: 'var(--accent-success)', letterSpacing: '0.2em' }}>Process</span>
+              <span className="text-sm font-semibold tracking-widest uppercase" style={{ color: 'var(--accent-success)', letterSpacing: '0.2em' }}>Process</span>
               <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mt-4">
                 From Manual to<br />
                 <span className="text-muted-light">Automated</span>
@@ -793,7 +1124,7 @@ function App() {
         <div className="max-w-3xl mx-auto relative z-10">
           <Reveal>
             <div className="text-center mb-16">
-              <span className="text-xs font-semibold tracking-widest uppercase text-muted" style={{ letterSpacing: '0.2em' }}>FAQ</span>
+              <span className="text-sm font-semibold tracking-widest uppercase text-muted" style={{ letterSpacing: '0.2em' }}>FAQ</span>
               <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mt-4">
                 Common Questions
               </h2>
