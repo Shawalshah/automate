@@ -771,9 +771,8 @@ function App() {
 
   return (
     <div className="relative min-h-screen" style={{ background: 'var(--bg)', color: 'var(--text-primary)' }}>
-      {/* ─── 3D Automation Network Background ─── */}
-      <ThreeNetworkBg />
-      <FloatingElements />
+      {/* ─── 3D Automation Network Background (Removed) ─── */}
+
 
       {/* ─── NAV ─── */}
       <motion.nav
@@ -852,7 +851,6 @@ function App() {
         className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24"
       >
         <Particles />
-        <div className="absolute inset-0 glow-mixed" />
         <div className="absolute bottom-0 left-0 right-0 h-40 hero-fade-bottom" />
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
           <Reveal>
