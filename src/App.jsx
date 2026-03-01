@@ -532,10 +532,12 @@ const painColors = {
 }
 
 function PainPointsSection() {
+  const duplicatedCards = [...painPoints, ...painPoints]
+  
   return (
-    <section id="problems" className="relative py-24 px-6 neuro-section">
+    <section id="problems" className="relative py-24 neuro-section overflow-hidden">
       {/* Header */}
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto px-6">
         <Reveal>
           <div className="text-center mb-16">
             <span
@@ -551,20 +553,23 @@ function PainPointsSection() {
           </div>
         </Reveal>
 
-        {/* Simple 2-column grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {painPoints.map((item, i) => {
-            const glow = painGlows[i]
-            const color = painColors[glow]
-            return (
-              <Reveal key={i} delay={i * 0.08}>
+        {/* Auto-scrolling horizontal carousel */}
+        <div className="relative">
+          {/* Scrolling container */}
+          <div className="pain-cards-scroll flex gap-6">
+            {duplicatedCards.map((item, i) => {
+              const originalIndex = i % painPoints.length
+              const glow = painGlows[originalIndex]
+              const color = painColors[glow]
+              return (
                 <motion.div
+                  key={i}
                   whileHover={{ y: -4 }}
-                  className="group pain-card relative overflow-hidden cursor-pointer h-full"
-                  style={{ minHeight: 320 }}
+                  className="group pain-card relative overflow-hidden cursor-pointer flex-shrink-0"
+                  style={{ minHeight: 320, width: 380 }}
                 >
                   {/* Big ghost number */}
-                  <span className="neuro-card-num select-none" style={{ fontSize: 'clamp(80px, 12vw, 140px)' }}>0{i + 1}</span>
+                  <span className="neuro-card-num select-none" style={{ fontSize: 'clamp(80px, 12vw, 140px)' }}>0{originalIndex + 1}</span>
 
                   <div className="relative z-10 h-full flex flex-col p-7">
                     {/* Top: icon + badge */}
@@ -584,7 +589,7 @@ function PainPointsSection() {
                         className="text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full"
                         style={{ background: `${color}15`, color, border: `1px solid ${color}30` }}
                       >
-                        Pain {String(i + 1).padStart(2, '0')}
+                        Pain {String(originalIndex + 1).padStart(2, '0')}
                       </span>
                     </div>
 
@@ -611,22 +616,23 @@ function PainPointsSection() {
                     style={{ background: `radial-gradient(circle, ${color}25 0%, transparent 70%)`, filter: 'blur(25px)' }}
                   />
                 </motion.div>
-              </Reveal>
-            )
-          })}
+              )
+            })}
+          </div>
         </div>
       </div>
     </section>
   )
 }
 
-/* ─── Capabilities - 2 Column Grid ─── */
+/* ─── Capabilities - Auto-Scrolling Horizontal ─── */
 function CapabilitiesSection() {
   const count = workflows.length
+  const duplicatedCards = [...workflows, ...workflows]
 
   return (
-    <section id="workflows" className="relative py-24 px-6 neuro-section">
-      <div className="max-w-6xl mx-auto">
+    <section id="workflows" className="relative py-24 neuro-section overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <Reveal>
           <div className="text-center mb-16">
@@ -643,90 +649,94 @@ function CapabilitiesSection() {
           </div>
         </Reveal>
 
-        {/* 2-column grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {workflows.map((item, i) => (
-            <Reveal key={i} delay={i * 0.06}>
-              <motion.div
-                whileHover={{ y: -6 }}
-                className="neuro-card relative overflow-hidden cursor-pointer h-full"
-                style={{ minHeight: 280 }}
-              >
-                {/* Big ghost number */}
-                <span className="neuro-card-num select-none" style={{ fontSize: 'clamp(70px, 10vw, 130px)' }}>
-                  {String(i + 1).padStart(2, '0')}
-                </span>
+        {/* Auto-scrolling horizontal carousel */}
+        <div className="relative">
+          <div className="capabilities-cards-scroll flex gap-6">
+            {duplicatedCards.map((item, i) => {
+              const originalIndex = i % workflows.length
+              return (
+                <motion.div
+                  key={i}
+                  whileHover={{ y: -6 }}
+                  className="neuro-card relative overflow-hidden cursor-pointer flex-shrink-0"
+                  style={{ minHeight: 340, width: 450 }}
+                >
+                  {/* Big ghost number */}
+                  <span className="neuro-card-num select-none" style={{ fontSize: 'clamp(70px, 10vw, 130px)' }}>
+                    {String(originalIndex + 1).padStart(2, '0')}
+                  </span>
 
-                <div className="relative z-10 h-full flex flex-col p-7">
-                  {/* Top: icon + badge */}
-                  <div className="flex items-start justify-between mb-5">
-                    <div
-                      className="flex items-center justify-center rounded-xl transition-all duration-300"
-                      style={{
-                        width: 52,
-                        height: 52,
-                        background: `${item.color}18`,
-                        border: `1px solid ${item.color}25`
-                      }}
-                    >
-                      <item.icon size={24} style={{ color: item.color }} />
-                    </div>
-                    <span
-                      className="text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full"
-                      style={{
-                        background: `${item.color}15`,
-                        color: item.color,
-                        border: `1px solid ${item.color}30`
-                      }}
-                    >
-                      {String(i + 1).padStart(2, '0')} / {String(count).padStart(2, '0')}
-                    </span>
-                  </div>
-
-                  {/* Title */}
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
-                      {item.title}
-                    </h3>
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2">
-                      {item.desc.split(', ').map((tag, j) => (
-                        <span
-                          key={j}
-                          className="text-[11px] px-2.5 py-1 rounded-full font-medium"
-                          style={{
-                            background: `${item.color}12`,
-                            color: 'var(--text-muted)',
-                            border: `1px solid ${item.color}20`
-                          }}
-                        >{tag}</span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Bottom accent bar */}
-                  <div className="mt-5 pt-5" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-                    <div className="flex items-center gap-3">
+                  <div className="relative z-10 h-full flex flex-col p-7">
+                    {/* Top: icon + badge */}
+                    <div className="flex items-start justify-between mb-5">
                       <div
-                        className="h-1 rounded-full flex-1"
-                        style={{ background: `linear-gradient(90deg, ${item.color}60, transparent)` }}
-                      />
+                        className="flex items-center justify-center rounded-xl transition-all duration-300"
+                        style={{
+                          width: 52,
+                          height: 52,
+                          background: `${item.color}18`,
+                          border: `1px solid ${item.color}25`
+                        }}
+                      >
+                        <item.icon size={24} style={{ color: item.color }} />
+                      </div>
                       <span
-                        className="text-xs font-semibold uppercase tracking-wider"
-                        style={{ color: item.color }}
-                      >Automated</span>
+                        className="text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full"
+                        style={{
+                          background: `${item.color}15`,
+                          color: item.color,
+                          border: `1px solid ${item.color}30`
+                        }}
+                      >
+                        {String(originalIndex + 1).padStart(2, '0')} / {String(count).padStart(2, '0')}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+                        {item.title}
+                      </h3>
+                      {/* Tags */}
+                      <div className="flex flex-wrap gap-2">
+                        {item.desc.split(', ').map((tag, j) => (
+                          <span
+                            key={j}
+                            className="text-[11px] px-2.5 py-1 rounded-full font-medium"
+                            style={{
+                              background: `${item.color}12`,
+                              color: 'var(--text-muted)',
+                              border: `1px solid ${item.color}20`
+                            }}
+                          >{tag}</span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Bottom accent bar */}
+                    <div className="mt-5 pt-5" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+                      <div className="flex items-center gap-3">
+                        <div
+                          className="h-1 rounded-full flex-1"
+                          style={{ background: `linear-gradient(90deg, ${item.color}60, transparent)` }}
+                        />
+                        <span
+                          className="text-xs font-semibold uppercase tracking-wider"
+                          style={{ color: item.color }}
+                        >Automated</span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Accent glow blob */}
-                <div
-                  className="neuro-accent-blob absolute -bottom-12 -right-12 w-40 h-40 rounded-full pointer-events-none"
-                  style={{ background: `radial-gradient(circle, ${item.color}30 0%, transparent 70%)`, filter: 'blur(28px)' }}
-                />
-              </motion.div>
-            </Reveal>
-          ))}
+                  {/* Accent glow blob */}
+                  <div
+                    className="neuro-accent-blob absolute -bottom-12 -right-12 w-40 h-40 rounded-full pointer-events-none"
+                    style={{ background: `radial-gradient(circle, ${item.color}30 0%, transparent 70%)`, filter: 'blur(28px)' }}
+                  />
+                </motion.div>
+              )
+            })}
+          </div>
         </div>
       </div>
     </section>
