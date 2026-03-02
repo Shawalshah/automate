@@ -745,14 +745,23 @@ function CapabilitiesSection() {
 
 
 /* ─── MAIN APP ─── */
+const heroVideos = ['/assets/1st.mp4', '/assets/2nd.mp4', '/assets/3rd.mp4', '/assets/4.mp4']
+
 function App() {
   const [mobileMenu, setMobileMenu] = useState(false)
   const [openFaq, setOpenFaq] = useState(null)
   const [formData, setFormData] = useState({ name: '', email: '', company: '', message: '' })
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark')
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0)
+  const videoRef = useRef(null)
   const { scrollYProgress } = useScroll()
   const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0])
   const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.95])
+
+  // Handle video ended - switch to next video in loop
+  const handleVideoEnded = () => {
+    setCurrentVideoIndex((prev) => (prev + 1) % heroVideos.length)
+  }
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -860,6 +869,22 @@ function App() {
         style={{ opacity: heroOpacity, scale: heroScale }}
         className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24"
       >
+        {/* Video Background */}
+        <div className="absolute inset-0 w-full h-full overflow-hidden">
+          <video
+            ref={videoRef}
+            key={currentVideoIndex}
+            autoPlay
+            muted
+            playsInline
+            onEnded={handleVideoEnded}
+            className="absolute top-0 left-0 w-full h-full object-cover"
+            style={{ filter: 'brightness(0.4)' }}
+          >
+            <source src={heroVideos[currentVideoIndex]} type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/80" />
+        </div>
         <Particles />
         <div className="absolute bottom-0 left-0 right-0 h-40 hero-fade-bottom" />
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
