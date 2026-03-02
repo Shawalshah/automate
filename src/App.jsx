@@ -554,9 +554,9 @@ function PainPointsSection() {
         </Reveal>
 
         {/* Auto-scrolling horizontal carousel */}
-        <div className="relative">
+        <div className="relative py-4">
           {/* Scrolling container */}
-          <div className="pain-cards-scroll flex gap-6">
+          <div className="pain-cards-scroll flex gap-6 py-4">
             {duplicatedCards.map((item, i) => {
               const originalIndex = i % painPoints.length
               const glow = painGlows[originalIndex]
@@ -568,9 +568,6 @@ function PainPointsSection() {
                   className="group pain-card relative overflow-hidden cursor-pointer flex-shrink-0"
                   style={{ minHeight: 320, width: 380 }}
                 >
-                  {/* Big ghost number */}
-                  <span className="neuro-card-num select-none" style={{ fontSize: 'clamp(80px, 12vw, 140px)' }}>0{originalIndex + 1}</span>
-
                   <div className="relative z-10 h-full flex flex-col p-7">
                     {/* Top: icon + badge */}
                     <div className="flex items-start justify-between mb-5">
@@ -650,8 +647,8 @@ function CapabilitiesSection() {
         </Reveal>
 
         {/* Auto-scrolling horizontal carousel */}
-        <div className="relative">
-          <div className="capabilities-cards-scroll flex gap-6">
+        <div className="relative py-4">
+          <div className="capabilities-cards-scroll flex gap-6 py-4">
             {duplicatedCards.map((item, i) => {
               const originalIndex = i % workflows.length
               return (
@@ -661,11 +658,6 @@ function CapabilitiesSection() {
                   className="neuro-card relative overflow-hidden cursor-pointer flex-shrink-0"
                   style={{ minHeight: 340, width: 450 }}
                 >
-                  {/* Big ghost number */}
-                  <span className="neuro-card-num select-none" style={{ fontSize: 'clamp(70px, 10vw, 130px)' }}>
-                    {String(originalIndex + 1).padStart(2, '0')}
-                  </span>
-
                   <div className="relative z-10 h-full flex flex-col p-7">
                     {/* Top: icon + badge */}
                     <div className="flex items-start justify-between mb-5">
@@ -891,30 +883,30 @@ function App() {
           <Reveal>
             <motion.div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full pill-badge mb-8" whileHover={{ scale: 1.03 }}>
               <Sparkles size={14} color="#60a5fa" />
-              <span className="text-xs font-medium text-muted">Industrial Automation Platform</span>
+              <span className="text-xs font-medium text-white/80">Industrial Automation Platform</span>
             </motion.div>
           </Reveal>
           <Reveal delay={0.1}>
-            <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight mb-6" style={{ lineHeight: 0.95 }}>
+            <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight mb-6 text-white" style={{ lineHeight: 0.95 }}>
               <span className="block">Automation That</span>
               <span className="block gradient-text">Reduces Downtime.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
-            <p className="text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light text-muted">
+            <p className="text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light text-white/70">
               Improve operational efficiency, increase uptime, and integrate plant and warehouse systems with automation that monitors, routes, and executes in real time.
             </p>
           </Reveal>
           <Reveal delay={0.3}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a href="#contact" className="group btn-primary px-8 py-4 rounded-full font-semibold text-sm flex items-center gap-2 no-underline">
+              <a href="#contact" className="group px-8 py-4 rounded-full font-semibold text-sm flex items-center gap-2 no-underline bg-white text-black hover:opacity-90 transition-all" style={{ boxShadow: '0 0 30px rgba(255,255,255,0.2)' }}>
                 Request Demo
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </a>
-              <a href="#use-cases" className="btn-outline px-8 py-4 rounded-full font-medium text-sm no-underline">
+              <a href="#use-cases" className="hero-btn-outline px-8 py-4 rounded-full font-medium text-sm no-underline text-white border border-white/30 hover:bg-white/10 transition-all">
                 Explore Use Cases
               </a>
-              <a href="#contact" className="btn-outline px-8 py-4 rounded-full font-medium text-sm no-underline">
+              <a href="#contact" className="hero-btn-outline px-8 py-4 rounded-full font-medium text-sm no-underline text-white border border-white/30 hover:bg-white/10 transition-all">
                 Book Consultation
               </a>
             </div>
@@ -927,10 +919,10 @@ function App() {
                 { value: 99, suffix: '%', label: 'Monitoring Uptime' },
               ].map((stat, i) => (
                 <div key={i} className="text-center">
-                  <div className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                  <div className="text-2xl sm:text-3xl font-bold text-white">
                     <Counter end={stat.value} suffix={stat.suffix} />
                   </div>
-                  <div className="text-xs text-muted-light mt-1">{stat.label}</div>
+                  <div className="text-xs text-white/60 mt-1">{stat.label}</div>
                 </div>
               ))}
             </div>

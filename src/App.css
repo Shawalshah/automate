@@ -710,18 +710,14 @@ body {
   width: max-content;
 }
 
-.pain-cards-scroll:hover {
-  animation-play-state: paused;
-}
+/* Removed hover pause - cards scroll continuously */
 
 .capabilities-cards-scroll {
   animation: scrollLeft 35s linear infinite;
   width: max-content;
 }
 
-.capabilities-cards-scroll:hover {
-  animation-play-state: paused;
-}
+/* Removed hover pause - cards scroll continuously */
 
 /* ═══════════════════════════════════════════════
    PAIN POINTS CARDS - Teal Border Glow Hover
@@ -840,7 +836,7 @@ body {
 
 .hero-fade-bottom {
 
-  background: linear-gradient(to top, var(--bg), transparent);
+  background: linear-gradient(to top, #000000, transparent);
 
 }
 
@@ -933,6 +929,24 @@ body {
     0 0 60px rgba(6, 182, 212, 0.12),
     0 12px 40px rgba(0, 0, 0, 0.5);
   transform: translateY(-6px);
+}
+
+[data-theme="light"] .neuro-card {
+  background: linear-gradient(145deg, #f0f3f8, #e4e8f0);
+  border: 1.5px solid rgba(0, 0, 0, 0.07);
+  box-shadow:
+    8px 8px 20px rgba(15, 23, 42, 0.08),
+    -4px -4px 12px rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="light"] .neuro-card:hover {
+  background: linear-gradient(145deg, rgba(6, 182, 212, 0.15), rgba(6, 182, 212, 0.08)) !important;
+  border-color: rgba(6, 182, 212, 0.6) !important;
+  box-shadow:
+    0 0 0 2px rgba(6, 182, 212, 0.3),
+    0 0 25px rgba(6, 182, 212, 0.2),
+    0 0 50px rgba(6, 182, 212, 0.1),
+    0 12px 40px rgba(15, 23, 42, 0.15);
 }
 
 .neuro-card-active {
@@ -1360,5 +1374,48 @@ html[data-theme="light"] .neuro-accent-blob {
   .deliverables-bar {
     padding: 0.75rem !important;
     margin-top: 1.5rem !important;
+  }
+
+  /* Pain Points & Capabilities cards - mobile horizontal scroll */
+  .pain-cards-scroll,
+  .capabilities-cards-scroll {
+    animation: scrollLeft 25s linear infinite;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    width: max-content;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .pain-cards-scroll::-webkit-scrollbar,
+  .capabilities-cards-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pain-cards-scroll > *,
+  .capabilities-cards-scroll > * {
+    flex-shrink: 0;
+    width: 300px !important;
+    min-width: 300px !important;
+  }
+
+  .pain-card,
+  .neuro-card {
+    width: 300px !important;
+    min-height: 280px !important;
+  }
+
+  /* Remove extra padding on mobile - no hover effect */
+  .pain-cards-scroll,
+  .capabilities-cards-scroll {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* Disable hover transform on mobile */
+  .pain-card:hover,
+  .neuro-card:hover {
+    transform: none !important;
   }
 }
