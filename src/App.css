@@ -758,22 +758,17 @@ body {
 }
 
 [data-theme="light"] .pain-card:hover {
-  background: #06b6d4 !important;
-  border-color: rgba(6, 182, 212, 0.8) !important;
+  background: linear-gradient(145deg, rgba(6, 182, 212, 0.15), rgba(6, 182, 212, 0.08)) !important;
+  border-color: rgba(6, 182, 212, 0.6) !important;
   box-shadow:
     0 0 0 2px rgba(6, 182, 212, 0.3),
-    0 0 25px rgba(6, 182, 212, 0.25),
-    0 0 60px rgba(6, 182, 212, 0.15),
-    0 12px 40px rgba(15, 23, 42, 0.2);
-  transform: translateY(-8px);
+    0 0 25px rgba(6, 182, 212, 0.2),
+    0 0 50px rgba(6, 182, 212, 0.1),
+    0 12px 40px rgba(15, 23, 42, 0.15);
+  transform: translateY(-6px);
 }
 
-[data-theme="light"] .pain-card:hover h3,
-[data-theme="light"] .pain-card:hover p,
-[data-theme="light"] .pain-card:hover span,
-[data-theme="light"] .pain-card:hover svg {
-  color: #ffffff !important;
-}
+/* Text stays dark on hover since background is subtle cyan tint */
 
 /* ═══════════════════════════════════════════════
    TECH STACK CARDS - Neumorphic Style
