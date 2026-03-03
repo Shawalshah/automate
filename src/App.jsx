@@ -396,16 +396,16 @@ function AutomationFlow() {
           <div key={i} className="flex items-center">
             <Reveal delay={i * 0.15}>
               <motion.div
-                whileHover={{ scale: 1.08, y: -4 }}
-                className="glass-card-strong flex flex-col items-center gap-3 px-5 py-6 rounded-2xl min-w-[140px]"
+                whileHover={{ scale: 1.04 }}
+                className="glass-card-strong flex flex-col items-center gap-4 px-8 py-8 rounded-3xl min-w-[180px]"
               >
                 <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center"
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center"
                   style={{ background: `${step.color}25` }}
                 >
-                  <step.icon size={22} style={{ color: step.color }} />
+                  <step.icon size={28} style={{ color: step.color }} />
                 </div>
-                <span className="text-xs font-medium text-muted">{step.label}</span>
+                <span className="text-sm font-medium text-muted whitespace-nowrap">{step.label}</span>
               </motion.div>
             </Reveal>
             {i < steps.length - 1 && (
@@ -429,7 +429,7 @@ function AutomationFlow() {
         {steps.map((step, i) => (
           <Reveal key={i} delay={i * 0.08}>
             <motion.div
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.04 }}
               className="glass-card-strong flex flex-col items-center gap-2 px-3 py-4 rounded-xl"
             >
               <div
@@ -438,7 +438,7 @@ function AutomationFlow() {
               >
                 <step.icon size={18} style={{ color: step.color }} />
               </div>
-              <span className="text-[11px] font-medium text-muted text-center">{step.label}</span>
+              <span className="text-[11px] font-medium text-muted text-center whitespace-nowrap">{step.label}</span>
             </motion.div>
           </Reveal>
         ))}
@@ -541,7 +541,7 @@ function PainPointsSection() {
         <Reveal>
           <div className="text-center mb-16">
             <span
-              className="inline-block text-sm font-bold tracking-[0.2em] uppercase mb-4"
+              className="inline-block text-lg font-bold tracking-[0.2em] uppercase mb-4"
               style={{ color: 'rgba(96,165,250,0.9)' }}
             >The Problem</span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
@@ -564,7 +564,7 @@ function PainPointsSection() {
               return (
                 <motion.div
                   key={i}
-                  whileHover={{ y: -4 }}
+                  whileHover={{ scale: 1.04 }}
                   className="group pain-card relative overflow-hidden cursor-pointer flex-shrink-0"
                   style={{ minHeight: 320, width: 380 }}
                 >
@@ -654,7 +654,7 @@ function CapabilitiesSection() {
               return (
                 <motion.div
                   key={i}
-                  whileHover={{ y: -6 }}
+                  whileHover={{ scale: 1.04 }}
                   className="neuro-card relative overflow-hidden cursor-pointer flex-shrink-0"
                   style={{ minHeight: 340, width: 450 }}
                 >
@@ -799,7 +799,7 @@ function App() {
             </span>
           </a>
           <div className="hidden md:flex items-center gap-8">
-            {[{ label: 'Home', href: '#' }, { label: 'Workflows', href: '#workflows' }, { label: 'Use Cases', href: '#use-cases' }, { label: 'About', href: '#about' }, { label: 'Contact', href: '#contact' }].map(item => (
+            {[{ label: 'Home', href: '#' }, { label: 'Workflows', href: '#workflows' }, { label: 'Use Cases', href: '#use-cases' }, { label: 'About Us', href: '#about' }, { label: 'Contact', href: '#contact' }].map(item => (
               <a key={item.label} href={item.href} className="text-sm no-underline text-muted transition-colors duration-300" style={{ '--tw-text-opacity': 1 }}>
                 {item.label}
               </a>
@@ -843,7 +843,7 @@ function App() {
               exit={{ opacity: 0, y: -10 }}
               className="md:hidden mt-2 mobile-menu rounded-2xl p-6 flex flex-col gap-4"
             >
-              {[{ label: 'Home', href: '#' }, { label: 'Workflows', href: '#workflows' }, { label: 'Use Cases', href: '#use-cases' }, { label: 'About', href: '#about' }, { label: 'Contact', href: '#contact' }].map(item => (
+              {[{ label: 'Home', href: '#' }, { label: 'Workflows', href: '#workflows' }, { label: 'Use Cases', href: '#use-cases' }, { label: 'About Us', href: '#about' }, { label: 'Contact', href: '#contact' }].map(item => (
                 <a key={item.label} href={item.href} onClick={() => setMobileMenu(false)} className="text-muted transition-colors no-underline">
                   {item.label}
                 </a>
@@ -871,11 +871,11 @@ function App() {
             playsInline
             onEnded={handleVideoEnded}
             className="absolute top-0 left-0 w-full h-full object-cover"
-            style={{ filter: 'brightness(0.4)' }}
+            style={{ filter: 'brightness(0.6)' }}
           >
             <source src={heroVideos[currentVideoIndex]} type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
         </div>
         <Particles />
         <div className="absolute bottom-0 left-0 right-0 h-40 hero-fade-bottom" />
@@ -946,7 +946,7 @@ function App() {
         <div className="max-w-5xl mx-auto relative z-10">
           <Reveal>
             <div className="text-center mb-16">
-              <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: '#8b5cf6', letterSpacing: '0.2em' }}>Live Example</span>
+              <span className="text-lg font-semibold tracking-widest uppercase" style={{ color: '#8b5cf6', letterSpacing: '0.2em' }}>Live Example</span>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4">
                 See Automation in Action
               </h2>
@@ -964,7 +964,7 @@ function App() {
         <div className="max-w-6xl mx-auto relative z-10">
           <Reveal>
             <div className="text-center mb-20">
-              <span className="text-sm font-semibold tracking-widest uppercase" style={{ color: '#3b82f6', letterSpacing: '0.2em' }}>Use Cases</span>
+              <span className="text-lg font-semibold tracking-widest uppercase" style={{ color: '#3b82f6', letterSpacing: '0.2em' }}>Use Cases</span>
               <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mt-4">
                 Built for Industrial Operations
               </h2>
@@ -1013,7 +1013,7 @@ function App() {
         <div className="max-w-5xl mx-auto relative z-10">
           <Reveal>
             <div className="text-center mb-20">
-              <span className="text-sm font-semibold tracking-widest uppercase" style={{ color: '#06b6d4', letterSpacing: '0.2em' }}>Technology</span>
+              <span className="text-lg font-semibold tracking-widest uppercase" style={{ color: '#06b6d4', letterSpacing: '0.2em' }}>Technology Stack</span>
               <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mt-4">
                 Our Automation Stack
               </h2>
@@ -1026,7 +1026,7 @@ function App() {
             {techStack.map((item, i) => (
               <Reveal key={i} delay={i * 0.06}>
                 <motion.div
-                  whileHover={{ y: -6 }}
+                  whileHover={{ scale: 1.04 }}
                   className="glass-card-strong p-4 md:p-7 rounded-2xl md:rounded-3xl h-full cursor-pointer"
                 >
                   <div
@@ -1066,7 +1066,7 @@ function App() {
         <div className="max-w-6xl mx-auto relative z-10">
           <Reveal>
             <div className="text-center mb-16">
-              <span className="text-sm font-semibold tracking-widest uppercase" style={{ color: '#10b981', letterSpacing: '0.2em' }}>About</span>
+              <span className="text-lg font-semibold tracking-widest uppercase" style={{ color: '#10b981', letterSpacing: '0.2em' }}>About US</span>
               <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mt-4">
                 Enterprise-Ready Automation
               </h2>
@@ -1108,10 +1108,9 @@ function App() {
         <div className="max-w-6xl mx-auto">
           <Reveal>
             <div className="text-center mb-20">
-              <span className="text-sm font-semibold tracking-widest uppercase" style={{ color: 'var(--accent-success)', letterSpacing: '0.2em' }}>Process</span>
+              <span className="text-lg font-semibold tracking-widest uppercase" style={{ color: 'var(--accent-success)', letterSpacing: '0.2em' }}>Process</span>
               <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mt-4">
-                From Manual to<br />
-                <span className="text-muted-light">Automated</span>
+                From Manual to <span className="text-muted-light">Automated</span>
               </h2>
               <p className="text-muted mt-6 max-w-lg mx-auto text-lg font-light">
                 Fast. Tested. Actually working.
@@ -1149,7 +1148,7 @@ function App() {
         <div className="max-w-3xl mx-auto relative z-10">
           <Reveal>
             <div className="text-center mb-16">
-              <span className="text-sm font-semibold tracking-widest uppercase text-muted" style={{ letterSpacing: '0.2em' }}>FAQ</span>
+              <span className="text-lg font-semibold tracking-widest uppercase text-muted" style={{ letterSpacing: '0.2em' }}>FAQ</span>
               <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mt-4">
                 Common Questions
               </h2>
@@ -1236,7 +1235,7 @@ function App() {
           <div className="grid lg:grid-cols-2 gap-16">
             <div>
               <Reveal>
-                <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: '#3b82f6', letterSpacing: '0.2em' }}>Get Started</span>
+                <span className="text-lg font-semibold tracking-widest uppercase" style={{ color: '#3b82f6', letterSpacing: '0.2em' }}>Get Started</span>
                 <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mt-4">
                   Talk to Sales
                 </h2>
@@ -1281,7 +1280,7 @@ function App() {
               </Reveal>
             </div>
             <Reveal delay={0.1}>
-              <form onSubmit={(e) => e.preventDefault()} className="glass-card-strong p-8 rounded-3xl">
+              <form onSubmit={(e) => e.preventDefault()} className="glass-card-strong no-hover-fill p-8 rounded-3xl">
                 <div className="space-y-5">
                   {[
                     { key: 'name', label: 'Your Name', type: 'text' },
@@ -1339,7 +1338,7 @@ function App() {
               {[
                 { label: 'Workflows', href: '#workflows' },
                 { label: 'Use Cases', href: '#use-cases' },
-                { label: 'About', href: '#about' },
+                { label: 'About Us', href: '#about' },
                 { label: 'Contact', href: '#contact' },
               ].map(link => (
                 <a key={link.label} href={link.href} className="text-xs text-muted-light transition-colors no-underline">

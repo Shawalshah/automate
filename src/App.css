@@ -359,48 +359,89 @@ body {
 [data-theme="light"] .glass-nav {
 
   box-shadow: 0 2px 24px rgba(0, 0, 0, 0.10), 0 1px 4px rgba(0, 0, 0, 0.06);
-
 }
 
-
-
 .glass-card {
-
   background: var(--surface-1);
-
   border: 1px solid var(--border-1);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  background: rgba(15, 182, 212, 0.25);
+  transition: height 0.4s ease-out;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.glass-card:hover::before {
+  height: 100%;
 }
 
 .glass-card:hover {
-  background: rgba(15, 182, 212, 0.25) !important;
   border-color: rgba(15, 182, 212, 0.7) !important;
   box-shadow: 0 0 25px rgba(15, 182, 212, 0.2);
-  transform: translateY(-4px);
+  transform: scale(1.04);
 }
 
 [data-theme="light"] .glass-card {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07), 0 4px 20px rgba(0, 0, 0, 0.07);
 }
 
-/* ... */
-
 .glass-card-strong {
   background: var(--surface-2);
   border: 1px solid var(--border-2);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card-strong::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  background: rgba(15, 182, 212, 0.28);
+  transition: height 0.4s ease-out;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.glass-card-strong:hover::before {
+  height: 100%;
 }
 
 .glass-card-strong:hover {
-  background: rgba(15, 182, 212, 0.28) !important;
   border-color: rgba(15, 182, 212, 0.7) !important;
   box-shadow: 0 0 25px rgba(15, 182, 212, 0.2);
-  transform: translateY(-4px);
+  transform: scale(1.04);
+}
+
+/* Contact form - no hover fill animation */
+.no-hover-fill {
+  overflow: visible;
+}
+
+.no-hover-fill::before {
+  display: none;
+}
+
+.no-hover-fill:hover {
+  transform: none;
 }
 
 [data-theme="light"] .glass-card-strong {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08), 0 6px 24px rgba(0, 0, 0, 0.08);
-
 }
 
 [data-theme="light"] .glass-card-strong:hover {
@@ -664,19 +705,34 @@ body {
 
 
 .faq-item {
-
   background: var(--surface-1);
-
   border: 1px solid var(--border-1);
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
 
-  transition: border-color 0.3s ease, background 0.3s ease;
+.faq-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  background: rgba(15, 182, 212, 0.25);
+  transition: height 0.4s ease-out;
+  z-index: 0;
+  pointer-events: none;
+}
 
+.faq-item:hover::before {
+  height: 100%;
 }
 
 .faq-item:hover {
-  background: rgba(15, 182, 212, 0.25) !important;
   border-color: rgba(15, 182, 212, 0.7) !important;
   box-shadow: 0 0 20px rgba(15, 182, 212, 0.18);
+  transform: scale(1.02);
 }
 
 [data-theme="light"] .faq-item {
@@ -706,15 +762,21 @@ body {
 }
 
 .pain-cards-scroll {
-  animation: scrollLeft 30s linear infinite;
+  animation: scrollLeft 45s linear infinite;
   width: max-content;
 }
 
-/* Removed hover pause - cards scroll continuously */
+.pain-cards-scroll:hover {
+  animation-play-state: paused;
+}
 
 .capabilities-cards-scroll {
-  animation: scrollLeft 35s linear infinite;
+  animation: scrollLeft 55s linear infinite;
   width: max-content;
+}
+
+.capabilities-cards-scroll:hover {
+  animation-play-state: paused;
 }
 
 /* Removed hover pause - cards scroll continuously */
@@ -735,10 +797,28 @@ body {
     background 0.35s ease,
     transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   will-change: transform;
+  position: relative;
+  overflow: hidden;
+}
+
+.pain-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  background: rgba(6, 182, 212, 0.15);
+  transition: height 0.4s ease-out;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.pain-card:hover::before {
+  height: 100%;
 }
 
 .pain-card:hover {
-  background: linear-gradient(145deg, #141824, #0a0d14) !important;
   border-color: rgba(6, 182, 212, 0.6) !important;
   box-shadow:
     0 0 0 1px rgba(6, 182, 212, 0.3),
@@ -746,7 +826,7 @@ body {
     0 0 40px rgba(6, 182, 212, 0.1),
     inset 0 0 60px rgba(6, 182, 212, 0.03),
     0 15px 50px rgba(0, 0, 0, 0.5);
-  transform: translateY(-6px);
+  transform: scale(1.04);
 }
 
 [data-theme="light"] .pain-card {
@@ -765,7 +845,7 @@ body {
     0 0 25px rgba(6, 182, 212, 0.2),
     0 0 50px rgba(6, 182, 212, 0.1),
     0 12px 40px rgba(15, 23, 42, 0.15);
-  transform: translateY(-6px);
+  transform: scale(1.04);
 }
 
 /* Text stays dark on hover since background is subtle cyan tint */
@@ -780,15 +860,34 @@ body {
     8px 8px 24px rgba(0, 0, 0, 0.4),
     -4px -4px 16px rgba(40, 45, 60, 0.3);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+}
+
+.tech-stack-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  background: rgba(15, 182, 212, 0.15);
+  transition: height 0.4s ease-out;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.tech-stack-card:hover::before {
+  height: 100%;
 }
 
 .tech-stack-card:hover {
-  background: rgba(15, 182, 212, 0.12);
   border-color: rgba(15, 182, 212, 0.3);
   box-shadow:
     8px 8px 24px rgba(0, 0, 0, 0.5),
     -4px -4px 16px rgba(40, 45, 60, 0.4),
     0 0 30px rgba(15, 182, 212, 0.1);
+  transform: scale(1.04);
 }
 
 .neuro-icon-container {
@@ -813,6 +912,7 @@ body {
     8px 8px 24px rgba(15, 23, 42, 0.1),
     -4px -4px 14px rgba(255, 255, 255, 0.95),
     0 0 25px rgba(15, 182, 212, 0.08);
+  transform: scale(1.04);
 }
 
 [data-theme="light"] .neuro-icon-container {
@@ -913,17 +1013,35 @@ body {
     background 0.35s ease,
     transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   will-change: transform;
+  position: relative;
+  overflow: hidden;
+}
+
+.neuro-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  background: rgba(6, 182, 212, 0.12);
+  transition: height 0.4s ease-out;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.neuro-card:hover::before {
+  height: 100%;
 }
 
 .neuro-card:hover {
-  background: linear-gradient(145deg, rgba(6, 182, 212, 0.10), rgba(6, 182, 212, 0.05)) !important;
   border-color: rgba(6, 182, 212, 0.75) !important;
   box-shadow:
     0 0 0 1px rgba(6, 182, 212, 0.25),
     0 0 20px rgba(6, 182, 212, 0.25),
     0 0 60px rgba(6, 182, 212, 0.12),
     0 12px 40px rgba(0, 0, 0, 0.5);
-  transform: translateY(-6px);
+  transform: scale(1.04);
 }
 
 [data-theme="light"] .neuro-card {
@@ -942,6 +1060,7 @@ body {
     0 0 25px rgba(6, 182, 212, 0.2),
     0 0 50px rgba(6, 182, 212, 0.1),
     0 12px 40px rgba(15, 23, 42, 0.15);
+  transform: scale(1.04);
 }
 
 .neuro-card-active {
