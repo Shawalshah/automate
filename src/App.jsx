@@ -17,9 +17,9 @@ function Reveal({ children, delay = 0, className = '' }) {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{ duration: 0.5, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
       className={className}
     >
       {children}
@@ -497,6 +497,17 @@ const useCases = [
   },
 ]
 
+const integrations = [
+  { name: 'PLC Systems', desc: 'Siemens, Allen-Bradley, Mitsubishi, Schneider', icon: Cpu, color: '#3b82f6' },
+  { name: 'SCADA/HMI', desc: 'Ignition, Wonderware, FactoryTalk, WinCC', icon: BarChart3, color: '#8b5cf6' },
+  { name: 'MES Platforms', desc: 'Rockwell, SAP MES, Siemens Opcenter', icon: Layers, color: '#06b6d4' },
+  { name: 'ERP Systems', desc: 'SAP, Oracle, Microsoft Dynamics, NetSuite', icon: Building2, color: '#10b981' },
+  { name: 'IoT Platforms', desc: 'AWS IoT, Azure IoT, ThingWorx, Kepware', icon: Globe, color: '#f59e0b' },
+  { name: 'Data Warehouses', desc: 'Snowflake, Databricks, BigQuery, Redshift', icon: Database, color: '#ec4899' },
+  { name: 'Historians', desc: 'OSIsoft PI, Aveva, InfluxDB, TimescaleDB', icon: Clock, color: '#a855f7' },
+  { name: 'Custom APIs', desc: 'REST, GraphQL, SOAP, Webhooks', icon: Code2, color: '#14b8a6' },
+]
+
 const techStack = [
   { name: 'OPC UA', desc: 'Industrial connectivity', category: 'Integration', icon: Plug, color: '#3b82f6' },
   { name: 'MQTT', desc: 'IoT messaging', category: 'Integration', icon: Share2, color: '#8b5cf6' },
@@ -522,6 +533,8 @@ const faqs = [
   { q: 'What if an automation breaks?', a: 'We set up monitoring, alerts, and fallback workflows. You\'ll know immediately if something needs attention, and most issues self-recover.' },
   { q: 'What\'s the ROI timeline?', a: 'Most clients see positive ROI within the first month. The average time savings is 15-30 hours per week per team.' },
   { q: 'Do you provide ongoing maintenance?', a: 'Yes. Every project includes 30 days of optimization. Extended maintenance plans are available for continuous improvement.' },
+  { q: 'How do you handle data security?', a: 'All data is encrypted at rest (AES-256) and in transit (TLS 1.3). We support on-premise, cloud, and hybrid deployments. SOC 2 Type II compliant.' },
+  { q: 'Can you integrate with legacy systems?', a: 'Yes. We have experience with older PLCs, proprietary protocols, and systems without modern APIs. We build custom middleware when needed.' },
 ]
 
 /* ─── Pain Points - Neumorphism Horizontal Scroll ─── */
@@ -794,12 +807,10 @@ function App() {
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between glass-nav rounded-2xl px-6 py-3">
           <a href="#" className="flex items-center no-underline">
-            <span className="text-xl font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
-              Mech<span className="gradient-text">links</span>
-            </span>
+            <img src="/assets/Machlinkslogo.svg" alt="MechLinks" className="h-12" />
           </a>
           <div className="hidden md:flex items-center gap-8">
-            {[{ label: 'Home', href: '#' }, { label: 'Workflows', href: '#workflows' }, { label: 'Use Cases', href: '#use-cases' }, { label: 'About Us', href: '#about' }, { label: 'Contact', href: '#contact' }].map(item => (
+            {[{ label: 'Use Cases', href: '#use-cases' }, { label: 'Integrations', href: '#integrations' }, { label: 'Security', href: '#security' }, { label: 'Process', href: '#process' }, { label: 'FAQ', href: '#faq' }].map(item => (
               <a key={item.label} href={item.href} className="text-sm no-underline text-muted transition-colors duration-300" style={{ '--tw-text-opacity': 1 }}>
                 {item.label}
               </a>
@@ -843,7 +854,7 @@ function App() {
               exit={{ opacity: 0, y: -10 }}
               className="md:hidden mt-2 mobile-menu rounded-2xl p-6 flex flex-col gap-4"
             >
-              {[{ label: 'Home', href: '#' }, { label: 'Workflows', href: '#workflows' }, { label: 'Use Cases', href: '#use-cases' }, { label: 'About Us', href: '#about' }, { label: 'Contact', href: '#contact' }].map(item => (
+              {[{ label: 'Use Cases', href: '#use-cases' }, { label: 'Integrations', href: '#integrations' }, { label: 'Security', href: '#security' }, { label: 'Process', href: '#process' }, { label: 'FAQ', href: '#faq' }].map(item => (
                 <a key={item.label} href={item.href} onClick={() => setMobileMenu(false)} className="text-muted transition-colors no-underline">
                   {item.label}
                 </a>
@@ -871,60 +882,79 @@ function App() {
             playsInline
             onEnded={handleVideoEnded}
             className="absolute top-0 left-0 w-full h-full object-cover"
-            style={{ filter: 'brightness(0.6)' }}
+            style={{ filter: 'brightness(0.45) saturate(1.2)' }}
           >
             <source src={heroVideos[currentVideoIndex]} type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/70" />
+          <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.4) 100%)' }} />
         </div>
         <Particles />
         <div className="absolute bottom-0 left-0 right-0 h-40 hero-fade-bottom" />
-        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
           <Reveal>
-            <motion.div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full pill-badge mb-8" whileHover={{ scale: 1.03 }}>
-              <Sparkles size={14} color="#60a5fa" />
-              <span className="text-xs font-medium text-white/80">Industrial Automation Platform</span>
+            <motion.div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-10" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(12px)' }} whileHover={{ scale: 1.03 }}>
+              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              <span className="text-xs font-medium text-white/80 tracking-wide">Industrial Automation Platform</span>
             </motion.div>
           </Reveal>
           <Reveal delay={0.1}>
-            <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight mb-6 text-white" style={{ lineHeight: 0.95 }}>
-              <span className="block">Automation That</span>
-              <span className="block gradient-text">Reduces Downtime.</span>
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 text-white" style={{ lineHeight: 1 }}>
+              <span className="block">Cut Unplanned Downtime</span>
+              <span className="block mt-2 gradient-text">by 40% in 90 Days.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
-            <p className="text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light text-white/70">
-              Improve operational efficiency, increase uptime, and integrate plant and warehouse systems with automation that monitors, routes, and executes in real time.
+            <p className="text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-6 leading-relaxed font-light text-white/70">
+              For industrial operations teams: Connect sensors, detect anomalies, trigger maintenance workflows, and restore uptime — all automated, all auditable.
             </p>
           </Reveal>
+          <Reveal delay={0.25}>
+            <div className="inline-flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-12 max-w-2xl mx-auto">
+              {['Sensor Data In', 'AI Detects Issues', 'Tickets Created', 'Parts Ordered', 'Uptime Restored'].map((step, i) => (
+                <div key={i} className="flex items-center gap-2 sm:gap-3">
+                  <span className="text-[11px] sm:text-xs font-medium text-white/50 whitespace-nowrap">{step}</span>
+                  {i < 4 && <ChevronRight size={12} className="text-white/25 shrink-0" />}
+                </div>
+              ))}
+            </div>
+          </Reveal>
           <Reveal delay={0.3}>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a href="#contact" className="group px-8 py-4 rounded-full font-semibold text-sm flex items-center gap-2 no-underline bg-white text-black hover:opacity-90 transition-all" style={{ boxShadow: '0 0 30px rgba(255,255,255,0.2)' }}>
-                Request Demo
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </a>
-              <a href="#use-cases" className="hero-btn-outline px-8 py-4 rounded-full font-medium text-sm no-underline text-white border border-white/30 hover:bg-white/10 transition-all">
-                Explore Use Cases
-              </a>
-              <a href="#contact" className="hero-btn-outline px-8 py-4 rounded-full font-medium text-sm no-underline text-white border border-white/30 hover:bg-white/10 transition-all">
-                Book Consultation
-              </a>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
+              <div className="flex flex-col items-center">
+                <a href="#contact" className="group px-9 py-4 rounded-full font-semibold text-sm flex items-center gap-2.5 no-underline bg-white text-black hover:bg-white/90 transition-all" style={{ boxShadow: '0 0 40px rgba(255,255,255,0.15), 0 4px 20px rgba(0,0,0,0.3)' }}>
+                  Book a Demo
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </a>
+                <span className="text-[11px] text-white/35 mt-2.5 tracking-wide">Response within 24 hours</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <a href="#contact" className="group px-9 py-4 rounded-full font-medium text-sm no-underline text-white flex items-center gap-2.5 transition-all" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.18)', backdropFilter: 'blur(8px)' }}>
+                  Start a Pilot
+                  <Play size={13} />
+                </a>
+                <span className="text-[11px] text-white/35 mt-2.5 tracking-wide">2-week proof of concept</span>
+              </div>
             </div>
           </Reveal>
           <Reveal delay={0.5}>
-            <div className="mt-20 grid grid-cols-3 gap-8 max-w-lg mx-auto">
-              {[
-                { value: 18, suffix: '%', label: 'Efficiency Gains' },
-                { value: 22, suffix: '%', label: 'Downtime Reduced' },
-                { value: 99, suffix: '%', label: 'Monitoring Uptime' },
-              ].map((stat, i) => (
-                <div key={i} className="text-center">
-                  <div className="text-2xl sm:text-3xl font-bold text-white">
-                    <Counter end={stat.value} suffix={stat.suffix} />
-                  </div>
-                  <div className="text-xs text-white/60 mt-1">{stat.label}</div>
+            <div className="mt-16 sm:mt-20 max-w-xl mx-auto">
+              <div className="flex items-center justify-center rounded-2xl px-6 py-5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', backdropFilter: 'blur(8px)' }}>
+                <div className="grid grid-cols-3 gap-0 w-full">
+                  {[
+                    { value: 40, suffix: '%', label: 'Less Downtime' },
+                    { value: 12, suffix: 'hrs', label: 'Saved / Week' },
+                    { value: 3, suffix: 'wks', label: 'To Deploy' },
+                  ].map((stat, i) => (
+                    <div key={i} className={`text-center ${i !== 2 ? 'border-r border-white/10' : ''}`}>
+                      <div className="text-2xl sm:text-3xl font-bold text-white">
+                        <Counter end={stat.value} suffix={stat.suffix} />
+                      </div>
+                      <div className="text-[10px] sm:text-xs text-white/45 mt-1 uppercase tracking-wider font-medium">{stat.label}</div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
           </Reveal>
         </div>
@@ -937,21 +967,54 @@ function App() {
         </motion.div>
       </motion.section>
 
+      {/* ─── CREDIBILITY STRIP - Logos & Proof ─── */}
+      <section className="relative py-16 px-6">
+        <div className="max-w-6xl mx-auto">
+          <Reveal>
+            <div className="text-center mb-10">
+              <p className="text-sm text-muted-light uppercase tracking-widest">Trusted by Industrial Leaders</p>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-60">
+              {['Siemens', 'Rockwell', 'Schneider', 'ABB', 'Honeywell', 'Emerson'].map((logo, i) => (
+                <span key={i} className="text-lg md:text-xl font-bold tracking-tight text-muted-light">{logo}</span>
+              ))}
+            </div>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <div className="mt-16 grid md:grid-cols-3 gap-6">
+              {[
+                { metric: '40%', label: 'Reduction in unplanned downtime', company: 'Manufacturing plant, 500+ assets' },
+                { metric: '12hrs', label: 'Saved per week on manual reporting', company: 'Pharma production facility' },
+                { metric: '3 weeks', label: 'From pilot to production deployment', company: 'Logistics warehouse network' },
+              ].map((proof, i) => (
+                <div key={i} className="glass-card p-6 rounded-2xl text-center">
+                  <div className="text-3xl md:text-4xl font-bold gradient-text mb-2">{proof.metric}</div>
+                  <p className="text-sm text-muted mb-3">{proof.label}</p>
+                  <p className="text-xs text-muted-extra">{proof.company}</p>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ─── PAIN POINTS ─── */}
       <PainPointsSection />
 
-      {/* ─── AUTOMATION FLOW DEMO ─── */}
+      {/* ─── HOW IT WORKS ─── */}
       <section className="relative py-24 px-6">
         <div className="absolute inset-0 glow-violet" />
         <div className="max-w-5xl mx-auto relative z-10">
           <Reveal>
             <div className="text-center mb-16">
-              <span className="text-lg font-semibold tracking-widest uppercase" style={{ color: '#8b5cf6', letterSpacing: '0.2em' }}>Live Example</span>
+              <span className="text-lg font-semibold tracking-widest uppercase" style={{ color: '#8b5cf6', letterSpacing: '0.2em' }}>How It Works</span>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4">
-                See Automation in Action
+                3 Steps to Automated Operations
               </h2>
               <p className="text-muted mt-4 max-w-lg mx-auto font-light">
-                Sensor signals → anomaly detection → maintenance ticket → parts request → uptime restored. Escalate only when needed.
+                Data flows in from sensors, AI reasons over anomalies, and automated workflows restore uptime — without manual intervention.
               </p>
             </div>
           </Reveal>
@@ -1001,6 +1064,46 @@ function App() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ─── INTEGRATIONS ─── */}
+      <section id="integrations" className="relative py-32 px-6">
+        <div className="divider-line absolute top-0 left-0 right-0" />
+        <div className="max-w-6xl mx-auto relative z-10">
+          <Reveal>
+            <div className="text-center mb-16">
+              <span className="text-lg font-semibold tracking-widest uppercase" style={{ color: '#ec4899', letterSpacing: '0.2em' }}>Integrations</span>
+              <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mt-4">
+                Connects to Your Existing Stack
+              </h2>
+              <p className="text-muted mt-6 max-w-2xl mx-auto font-light text-lg">
+                MechLinks integrates with PLCs, SCADA, MES, ERP, IoT platforms, data warehouses, and custom APIs. If it has an interface, we can connect it.
+              </p>
+            </div>
+          </Reveal>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {integrations.map((item, i) => (
+              <Reveal key={i} delay={i * 0.05}>
+                <div className="glass-card p-5 rounded-2xl h-full">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ background: `${item.color}18` }}>
+                    <item.icon size={20} style={{ color: item.color }} />
+                  </div>
+                  <h3 className="text-sm font-semibold mb-1">{item.name}</h3>
+                  <p className="text-xs text-muted-light leading-relaxed">{item.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={0.4}>
+            <div className="mt-12 text-center">
+              <p className="text-sm text-muted-light mb-4">Don't see your system? We build custom integrations.</p>
+              <a href="#contact" className="inline-flex items-center gap-2 text-sm font-medium no-underline" style={{ color: '#3b82f6' }}>
+                Talk to our integration team
+                <ArrowRight size={14} />
+              </a>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -1103,6 +1206,56 @@ function App() {
         </div>
       </section>
 
+      {/* ─── SECURITY & COMPLIANCE ─── */}
+      <section id="security" className="relative py-32 px-6">
+        <div className="divider-line absolute top-0 left-0 right-0" />
+        <div className="max-w-6xl mx-auto relative z-10">
+          <Reveal>
+            <div className="text-center mb-16">
+              <span className="text-lg font-semibold tracking-widest uppercase" style={{ color: '#ef4444', letterSpacing: '0.2em' }}>Security & Compliance</span>
+              <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mt-4">
+                Enterprise-Grade Security
+              </h2>
+              <p className="text-muted mt-6 max-w-2xl mx-auto font-light text-lg">
+                Built for regulated industries. Your data stays yours, with full audit trails and compliance-ready architecture.
+              </p>
+            </div>
+          </Reveal>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { icon: Lock, title: 'Data Encryption', desc: 'AES-256 encryption at rest, TLS 1.3 in transit. Zero plain-text storage of sensitive data.', color: '#3b82f6' },
+              { icon: ShieldCheck, title: 'Access Control', desc: 'Role-based permissions, SSO/SAML integration, MFA enforcement, session management.', color: '#10b981' },
+              { icon: Database, title: 'Deployment Options', desc: 'Cloud, on-premise, or hybrid deployment. Air-gapped environments supported.', color: '#8b5cf6' },
+              { icon: BarChart3, title: 'Audit Logging', desc: 'Complete audit trails for all actions. Immutable logs with configurable retention.', color: '#f59e0b' },
+              { icon: RefreshCw, title: 'Change Management', desc: 'Version control for workflows. Approval gates for production changes. Rollback capability.', color: '#06b6d4' },
+              { icon: Globe, title: 'Compliance Ready', desc: 'SOC 2 Type II, ISO 27001, GDPR, HIPAA-ready architecture. FDA 21 CFR Part 11 support.', color: '#ec4899' },
+            ].map((item, i) => (
+              <Reveal key={item.title} delay={i * 0.06}>
+                <div className="glass-card p-6 rounded-2xl h-full">
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style={{ background: `${item.color}18` }}>
+                    <item.icon size={20} style={{ color: item.color }} />
+                  </div>
+                  <h3 className="text-base font-semibold mb-2">{item.title}</h3>
+                  <p className="text-sm text-muted leading-relaxed">{item.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={0.4}>
+            <div className="mt-12 glass-card-strong p-6 rounded-2xl">
+              <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10">
+                {['SOC 2', 'ISO 27001', 'GDPR', 'HIPAA Ready', 'FDA 21 CFR Part 11'].map((cert, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <ShieldCheck size={16} style={{ color: 'var(--accent-success)' }} />
+                    <span className="text-sm font-medium text-muted">{cert}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ─── PROCESS TIMELINE ─── */}
       <section id="process" className="relative py-32 px-6">
         <div className="max-w-6xl mx-auto">
@@ -1189,35 +1342,94 @@ function App() {
         </div>
       </section>
 
+      {/* ─── RESOURCES ─── */}
+      <section className="relative py-24 px-6">
+        <div className="max-w-5xl mx-auto">
+          <Reveal>
+            <div className="text-center mb-12">
+              <span className="text-lg font-semibold tracking-widest uppercase" style={{ color: '#8b5cf6', letterSpacing: '0.2em' }}>Resources</span>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-4">
+                Get Started Faster
+              </h2>
+              <p className="text-muted mt-4 max-w-lg mx-auto font-light">
+                Guides, playbooks, and tools to help you plan and execute your automation journey.
+              </p>
+            </div>
+          </Reveal>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { title: 'Implementation Guide', desc: 'Step-by-step guide to deploying your first automation workflow', icon: Layers, color: '#3b82f6' },
+              { title: 'Integration Playbook', desc: 'Best practices for connecting PLCs, SCADA, MES, and ERP systems', icon: Plug, color: '#8b5cf6' },
+              { title: 'ROI Calculator', desc: 'Estimate your potential savings from automation', icon: TrendingUp, color: '#10b981' },
+              { title: 'Security Whitepaper', desc: 'Detailed overview of our security architecture and compliance', icon: ShieldCheck, color: '#ef4444' },
+            ].map((item, i) => (
+              <Reveal key={i} delay={i * 0.08}>
+                <div className="glass-card p-5 rounded-2xl h-full cursor-pointer group">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ background: `${item.color}18` }}>
+                    <item.icon size={18} style={{ color: item.color }} />
+                  </div>
+                  <h3 className="text-sm font-semibold mb-2 group-hover:text-blue-400 transition-colors">{item.title}</h3>
+                  <p className="text-xs text-muted-light leading-relaxed">{item.desc}</p>
+                  <div className="mt-4 flex items-center gap-1 text-xs font-medium" style={{ color: item.color }}>
+                    <span>Download</span>
+                    <ArrowRight size={12} />
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ─── CTA ─── */}
       <section className="relative py-32 px-6">
         <div className="absolute inset-0 glow-blue" />
         <div className="max-w-4xl mx-auto relative z-10 text-center">
           <Reveal>
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
-              Reduce Downtime.<br />
-              <span className="gradient-text">Standardize Execution.</span>
+              Ready to Cut Downtime<br />
+              <span className="gradient-text">by 40%?</span>
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="text-muted mt-6 max-w-xl mx-auto text-lg font-light">
-              A focused assessment identifies your highest-impact automation opportunities and the integration path to production.
+              Join operations teams who've eliminated manual workflows and reduced unplanned downtime in weeks, not months.
             </p>
           </Reveal>
+          <Reveal delay={0.15}>
+            <div className="mt-8 inline-flex items-center gap-4 glass-card px-6 py-4 rounded-2xl">
+              <div className="flex -space-x-2">
+                {[1,2,3].map(i => (
+                  <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 border-2 border-black/20" />
+                ))}
+              </div>
+              <div className="text-left">
+                <p className="text-sm font-medium">"Deployed in 3 weeks. 40% fewer incidents."</p>
+                <p className="text-xs text-muted-light">— Operations Director, Manufacturing Plant</p>
+              </div>
+            </div>
+          </Reveal>
           <Reveal delay={0.2}>
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a href="#contact" className="group btn-primary px-10 py-5 rounded-full font-semibold text-sm flex items-center gap-2 no-underline">
-                Contact Sales
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </a>
-              <a href="#contact" className="btn-outline px-10 py-5 rounded-full font-medium text-sm no-underline">
-                Book Consultation
-              </a>
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6">
+              <div className="flex flex-col items-center">
+                <a href="#contact" className="group btn-primary px-10 py-5 rounded-full font-semibold text-sm flex items-center gap-2 no-underline">
+                  Book a Demo
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </a>
+                <span className="text-[11px] text-muted-extra mt-2">Response within 24 hours</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <a href="#contact" className="btn-outline px-10 py-5 rounded-full font-medium text-sm no-underline flex items-center gap-2">
+                  Start a Pilot
+                  <Play size={14} />
+                </a>
+                <span className="text-[11px] text-muted-extra mt-2">2-week proof of concept</span>
+              </div>
             </div>
           </Reveal>
           <Reveal delay={0.3}>
             <div className="mt-12 flex flex-wrap justify-center gap-6 text-xs text-muted-light">
-              {['Process mapping & bottlenecks', 'Integration requirements', 'Downtime reduction opportunities', 'Governance & approvals', 'ROI and rollout plan'].map((item, i) => (
+              {['Free assessment', 'No commitment required', '2-week pilot available', 'ROI guarantee'].map((item, i) => (
                 <div key={i} className="flex items-center gap-1.5">
                   <Check size={12} style={{ color: 'var(--accent-success-dim)' }} />
                   <span>{item}</span>
@@ -1328,17 +1540,16 @@ function App() {
       <footer className="relative py-16 px-6 section-divider">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="flex items-center gap-2">
-              <span className="text-base font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
-                Mech<span className="gradient-text">links</span>
-              </span>
-              <span className="text-xs text-muted-extra ml-3">Enterprise Industrial Automation</span>
+            <div className="flex items-center gap-3">
+              <img src="/assets/Machlinkslogo.svg" alt="MechLinks" className="h-10" />
+              <span className="text-xs text-muted-extra">Enterprise Industrial Automation</span>
             </div>
             <div className="flex items-center gap-8">
               {[
-                { label: 'Workflows', href: '#workflows' },
                 { label: 'Use Cases', href: '#use-cases' },
-                { label: 'About Us', href: '#about' },
+                { label: 'Integrations', href: '#integrations' },
+                { label: 'Security', href: '#security' },
+                { label: 'FAQ', href: '#faq' },
                 { label: 'Contact', href: '#contact' },
               ].map(link => (
                 <a key={link.label} href={link.href} className="text-xs text-muted-light transition-colors no-underline">
